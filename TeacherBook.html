@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חוברת תרגול במתמטיקה למכינה הטכנולוגית</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            counter-reset: chapter section exercise;
+        }
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        h1::before {
+            counter-increment: chapter;
+            content: "פרק " counter(chapter) ": ";
+        }
+        h2::before {
+            counter-increment: section;
+            content: counter(chapter) "." counter(section) " - ";
+        }
+        .exercise::before {
+            counter-increment: exercise;
+            content: "תרגיל " counter(exercise) ": ";
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .math-ltr {
+            direction: ltr;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            overflow-x: auto;
+        }
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+            .printable-area {
+                box-shadow: none !important;
+                border: none !important;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid #3b82f6;
+            padding-bottom: 1rem;
+        }
+        .chapter-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+        .info-box {
+            background-color: #eef2ff;
+            border-right: 4px solid #4f46e5;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .example-box {
+            background-color: #f0fdf4;
+            border-right: 4px solid #22c55e;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .practice-box {
+            background-color: #fffbeb;
+            border-right: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .step-number {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <button onclick="window.print()" class="no-print fixed top-4 left-4 bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block ml-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+        </svg>
+        הדפס כ-PDF
+    </button>
+
+    <div class="printable-area max-w-4xl mx-auto p-8 sm:p-12 bg-white shadow-2xl mt-16 mb-16 rounded-lg">
+        
+        <header class="page-title">
+            <h1 class="text-4xl font-bold text-blue-600">חוברת תרגול במתמטיקה</h1>
+            <p class="text-xl text-gray-600 mt-2">הכנה למבחני מה"ט במכינה הטכנולוגית</p>
+        </header>
+
+        <main>
+            <!-- Chapter 1: Foundations of Algebra -->
+            <section class="chapter-card page-break">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">יסודות האלגברה</h1>
+                <p class="mb-6 text-lg">בפרק זה נחזור על מושגי היסוד באלגברה, שהם הבסיס לכל הנושאים המתקדמים יותר. נלמד על סדר פעולות חשבון, פישוט ביטויים אלגבריים ופתרון משוואות פשוטות ממעלה ראשונה.</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">סדר פעולות חשבון וכינוס איברים</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>סדר הפעולות קובע באיזה סדר יש לבצע את הפעולות בתרגיל חשבוני. הכלל הוא: <strong>סוגריים</strong>, <strong>חזקות ושורשים</strong>, <strong>כפל וחילוק</strong>, ולבסוף <strong>חיבור וחיסור</strong>. כינוס איברים דומים הוא חיבור או חיסור של איברים המכילים את אותו משתנה באותה חזקה.</p></div>
+                    <div class="practice-box"><h3 class="text-xl font-semibold mb-2">תרגילים</h3><div class="space-y-3">
+                        <div class="exercise"><div class="math-ltr">$7 + (10 - 4) \div 2$</div></div>
+                        <div class="exercise"><div class="math-ltr">$5 \times 3^2 - 10$</div></div>
+                        <div class="exercise"><div class="math-ltr">$2(3x + 1) - 4x + 5$</div></div>
+                    </div></div>
+                </article>
+                
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">פתרון משוואות ממעלה ראשונה</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>משוואה ממעלה ראשונה היא משוואה בה הנעלם מופיע בחזקה 1. המטרה היא לבודד את הנעלם באגף אחד של המשוואה באמצעות ביצוע פעולות חשבון זהות על שני האגפים.</p></div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה פתורה</h3><p class="mb-2">פתור: $5x - 3 = 2x + 9$</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>ריכוז נעלמים:</strong> $5x - 2x - 3 = 9 \implies 3x - 3 = 9$</div></div><div class="step"><div class="step-number">2</div><div><strong>ריכוז מספרים:</strong> $3x = 9 + 3 \implies 3x = 12$</div></div><div class="step"><div class="step-number">3</div><div><strong>בידוד הנעלם:</strong> $x = \frac{12}{3} \implies x = 4$</div></div></div></div>
+                    <div class="practice-box"><h3 class="text-xl font-semibold mb-2">תרגילים</h3><div class="space-y-3">
+                        <div class="exercise"><div class="math-ltr">$4x + 7 = 19$</div></div>
+                        <div class="exercise"><div class="math-ltr">$6y - 5 = 2y + 11$</div></div>
+                        <div class="exercise"><div class="math-ltr">$10 - 2x = 4(x-2)$</div></div>
+                    </div></div>
+                </article>
+            </section>
+
+            <!-- Chapter 2: Equations -->
+            <section class="chapter-card page-break">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">משוואות ואי-שוויונים</h1>
+                <p class="mb-6 text-lg">בפרק זה נעמיק בסוגים שונים של משוואות. נתחיל ממשוואות עם מכנה, נמשיך למשוואות ריבועיות, משוואות עם נעלם במכנה ונסיים במערכות של אי-שוויונים.</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">משוואות עם מכנה מספרי</h2>
+                     <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>כדי לפתור משוואה עם שברים, מוצאים <strong>מכנה משותף מינימלי (מ.מ.מ)</strong> וכופלים כל איבר במשוואה במכנה המשותף כדי לבטל את המכנים.</p></div>
+                    <div class="practice-box"><h3 class="text-xl font-semibold mb-2">תרגילים</h3><div class="space-y-3">
+                        <div class="exercise"><div class="math-ltr">$\frac{x}{3} + \frac{x}{4} = 7$</div></div>
+                        <div class="exercise"><div class="math-ltr">$\frac{2y-1}{5} = \frac{y+3}{2}$</div></div>
+                    </div></div>
+                </article>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">משוואות ריבועיות</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>משוואה ריבועית מהצורה $ax^2 + bx + c = 0$ נפתרת באמצעות <strong>נוסחת השורשים</strong>: $x_{1,2} = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$.</p></div>
+                    <div class="practice-box"><h3 class="text-xl font-semibold mb-2">תרגילים</h3><div class="space-y-3">
+                        <div class="exercise"><div class="math-ltr">$x^2 + 7x + 10 = 0$</div></div>
+                        <div class="exercise"><div class="math-ltr">$2y^2 - 3y - 2 = 0$</div></div>
+                        <div class="exercise"><div class="math-ltr">$z^2 = 4z + 21$</div></div>
+                    </div></div>
+                </article>
+                
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">משוואות עם נעלם במכנה</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>במשוואות אלו, חובה להתחיל בקביעת <strong>תחום ההצבה</strong> - הערכים שהנעלם אינו יכול לקבל (כדי למנוע חילוק באפס). לאחר מכן, פותרים בדומה למשוואה עם מכנה מספרי: כופלים במכנה המשותף. בסוף, יש לוודא שהפתרונות שקיבלנו נמצאים בתחום ההצבה.</p></div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה פתורה (מבוסס על תרגיל 1, אביב 2011)</h3><p class="mb-2">פתור: $\frac{5}{4-y^2} = \frac{3}{2+y} + 2$</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>פירוק לגורמים ותחום הצבה:</strong> נפרק את המכנה: $4-y^2 = (2-y)(2+y)$. תחום ההצבה הוא $y \neq 2$ ו-$y \neq -2$.</div></div><div class="step"><div class="step-number">2</div><div><strong>מכנה משותף:</strong> המכנה המשותף הוא $(2-y)(2+y)$. נכפול בו את המשוואה.</div><div class="math-ltr">$5 = 3(2-y) + 2(2-y)(2+y)$</div></div><div class="step"><div class="step-number">3</div><div><strong>פישוט ופתרון:</strong> $5 = 6 - 3y + 2(4-y^2) \implies 5 = 6 - 3y + 8 - 2y^2 \implies 2y^2 + 3y - 9 = 0$.</div></div>
+                        <div class="step"><div class="step-number">4</div><div><strong>נוסחת השורשים:</strong> פתרון המשוואה הריבועית נותן $y_1 = 1.5$ ו-$y_2 = -3$.</div></div>
+                        <div class="step"><div class="step-number">🏁</div><div><strong>בדיקת פתרונות:</strong> שני הפתרונות נמצאים בתחום ההצבה ולכן שניהם קבילים.</div></div></div></div>
+                </article>
+            </section>
+            
+            <!-- Chapter 3: Analytic Geometry -->
+            <section class="chapter-card page-break">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">גיאומטריה אנליטית</h1>
+                <p class="mb-6 text-lg">בפרק זה נלמד לתאר ולנתח צורות גיאומטריות באמצעות מערכת צירים. נכיר נוסחאות יסוד כמו מרחק בין שתי נקודות, אמצע קטע, שיפוע ומשוואת ישר, ונשתמש בהן להוכחת תכונות של משולשים ומרובעים.</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">נוסחאות יסוד</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>עבור שתי נקודות $A(x_1, y_1)$ ו-$B(x_2, y_2)$:
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>מרחק:</strong> $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</li>
+                            <li><strong>אמצע קטע M:</strong> $M(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2})$</li>
+                            <li><strong>שיפוע:</strong> $m = \frac{y_2-y_1}{x_2-x_1}$</li>
+                            <li><strong>משוואת ישר:</strong> $y - y_1 = m(x - x_1)$</li>
+                        </ul>
+                    </p></div>
+                </article>
+
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">תכונות של ישרים ומרובעים</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><ul class="list-disc list-inside space-y-2">
+                        <li><strong>ישרים מקבילים:</strong> בעלי אותו שיפוע ($m_1 = m_2$).</li>
+                        <li><strong>ישרים מאונכים:</strong> מכפלת שיפועיהם היא 1- ($m_1 \cdot m_2 = -1$).</li>
+                        <li><strong>מקבילית:</strong> שני זוגות של צלעות נגדיות מקבילות (שיפועים שווים).</li>
+                        <li><strong>מלבן:</strong> מקבילית עם זוויות ישרות (צלעות סמוכות מאונכות).</li>
+                        <li><strong>מעוין:</strong> מקבילית עם צלעות סמוכות שוות (מרחקים שווים).</li>
+                        <li><strong>ריבוע:</strong> גם מלבן וגם מעוין.</li>
+                    </ul></div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה (מבוסס על תרגיל 5, אביב 2010)</h3><p>קדקודי מרובע ABCD הם: $A(1,2), B(3,6), C(7,8), D(5,4)$. הוכח שהמרובע הוא מקבילית.</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>חישוב שיפוע AB:</strong> $m_{AB} = \frac{6-2}{3-1} = \frac{4}{2} = 2$.</div></div>
+                        <div class="step"><div class="step-number">2</div><div><strong>חישוב שיפוע CD:</strong> $m_{CD} = \frac{4-8}{5-7} = \frac{-4}{-2} = 2$.</div></div>
+                        <div class="step"><div class="step-number">3</div><div><strong>מסקנה 1:</strong> מכיוון ש-$m_{AB} = m_{CD}$, הצלעות $AB$ ו-$CD$ מקבילות.</div></div>
+                        <div class="step"><div class="step-number">4</div><div><strong>חישוב שיפוע BC:</strong> $m_{BC} = \frac{8-6}{7-3} = \frac{2}{4} = 0.5$.</div></div>
+                        <div class="step"><div class="step-number">5</div><div><strong>חישוב שיפוע AD:</strong> $m_{AD} = \frac{4-2}{5-1} = \frac{2}{4} = 0.5$.</div></div>
+                        <div class="step"><div class="step-number">🏁</div><div><strong>מסקנה סופית:</strong> מכיוון ש-$m_{BC} = m_{AD}$, גם הצלעות $BC$ ו-$AD$ מקבילות. מרובע שבו שני זוגות של צלעות נגדיות מקבילות הוא מקבילית.</div></div></div></div>
+                </article>
+            </section>
+            
+            <!-- Chapter 4: Trigonometry -->
+            <section class="chapter-card page-break">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">טריגונומטריה</h1>
+                <p class="mb-6 text-lg">בפרק זה נחקור את הקשרים בין זוויות וצלעות במשולשים. נתחיל ממשולש ישר זווית ונמשיך למשפטים המאפשרים לפתור כל משולש – משפט הסינוסים ומשפט הקוסינוסים.</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">משולש ישר זווית</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>במשולש ישר זווית, עבור זווית חדה $\alpha$:
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li>$\sin(\alpha) = \frac{\text{ניצב מול הזווית}}{\text{יתר}}$</li>
+                            <li>$\cos(\alpha) = \frac{\text{ניצב ליד הזווית}}{\text{יתר}}$</li>
+                            <li>$\tan(\alpha) = \frac{\text{ניצב מול הזווית}}{\text{ניצב ליד הזווית}}$</li>
+                        </ul>
+                    </p></div>
+                </article>
+
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">משפט הסינוסים והקוסינוסים</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3><p>במשולש כלשהו שצלעותיו $a,b,c$ והזוויות שמולן $\alpha, \beta, \gamma$ בהתאמה:
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>משפט הסינוסים:</strong> $\frac{a}{\sin\alpha} = \frac{b}{\sin\beta} = \frac{c}{\sin\gamma} = 2R$ (כאשר R הוא רדיוס המעגל החוסם).</li>
+                            <li><strong>משפט הקוסינוסים:</strong> $c^2 = a^2 + b^2 - 2ab\cos\gamma$ (וכן לכל צלע אחרת).</li>
+                        </ul>
+                    </p></div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה (מבוסס על תרגיל 7, קיץ 2010)</h3><p>במשולש ABC נתון: $AB=10$ ס"מ, $AC=8$ ס"מ, $\angle BAC = 50^\circ$. חשב את אורך הצלע BC.</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>בחירת המשפט:</strong> נתונות שתי צלעות והזווית שביניהן, ומבקשים למצוא את הצלע השלישית. נשתמש במשפט הקוסינוסים.</div></div>
+                        <div class="step"><div class="step-number">2</div><div><strong>הצבה בנוסחה:</strong> $BC^2 = AB^2 + AC^2 - 2 \cdot AB \cdot AC \cdot \cos(\angle BAC)$</div>
+                        <div class="math-ltr">$BC^2 = 10^2 + 8^2 - 2 \cdot 10 \cdot 8 \cdot \cos(50^\circ)$</div></div>
+                        <div class="step"><div class="step-number">3</div><div><strong>חישוב:</strong> $BC^2 = 100 + 64 - 160 \cdot 0.6427 \approx 164 - 102.85 = 61.15$</div></div>
+                        <div class="step"><div class="step-number">🏁</div><div><strong>תוצאה סופית:</strong> $BC = \sqrt{61.15} \approx 7.82$ ס"מ.</div></div></div></div>
+                </article>
+            </section>
+
+            <!-- Chapter 5: Sequences -->
+            <section class="chapter-card page-break">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">סדרות</h1>
+                <p class="mb-6 text-lg">בפרק זה נלמד על שני סוגים עיקריים של סדרות: סדרה חשבונית, בה ההפרש בין כל שני איברים עוקבים קבוע, וסדרה הנדסית, בה המנה בין כל שני איברים עוקבים קבועה.</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">סדרה חשבונית</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>איבר כללי:</strong> $a_n = a_1 + (n-1)d$</li>
+                            <li><strong>סכום n האיברים הראשונים:</strong> $S_n = \frac{n}{2}[2a_1 + (n-1)d]$ או $S_n = \frac{n(a_1+a_n)}{2}$</li>
+                        </ul>
+                        כאשר $a_1$ הוא האיבר הראשון, $d$ הוא הפרש הסדרה, ו-$n$ הוא מספר האיברים.
+                    </div>
+                </article>
+
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">סדרה הנדסית</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>איבר כללי:</strong> $a_n = a_1 \cdot q^{n-1}$</li>
+                            <li><strong>סכום n האיברים הראשונים:</strong> $S_n = \frac{a_1(q^n-1)}{q-1}$</li>
+                        </ul>
+                        כאשר $a_1$ הוא האיבר הראשון, $q$ היא מנת הסדרה, ו-$n$ הוא מספר האיברים.
+                    </div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה (מבוסס על תרגיל 8, קיץ 2011)</h3><p>בסדרה חשבונית האיבר השלישי הוא 7 והאיבר השביעי הוא 19. מצא את האיבר הראשון ואת הפרש הסדרה.</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>בניית משוואות:</strong> נשתמש בנוסחת האיבר הכללי:
+                        <div class="math-ltr">$a_3 = a_1 + (3-1)d = a_1 + 2d = 7$</div>
+                        <div class="math-ltr">$a_7 = a_1 + (7-1)d = a_1 + 6d = 19$</div></div></div>
+                        <div class="step"><div class="step-number">2</div><div><strong>פתרון מערכת משוואות:</strong> נחסר את המשוואה הראשונה מהשנייה:
+                        <div class="math-ltr">$(a_1 + 6d) - (a_1 + 2d) = 19 - 7 \implies 4d = 12 \implies d = 3$</div></div></div>
+                        <div class="step"><div class="step-number">🏁</div><div><strong>מציאת האיבר הראשון:</strong> נציב $d=3$ במשוואה הראשונה:
+                        <div class="math-ltr">$a_1 + 2(3) = 7 \implies a_1 + 6 = 7 \implies a_1 = 1$</div>
+                        האיבר הראשון הוא 1 והפרש הסדרה הוא 3.</div></div></div></div>
+                </article>
+            </section>
+            
+            <!-- Chapter 6: Calculus -->
+            <section class="chapter-card">
+                <h1 class="text-3xl text-gray-800 mb-6 border-b-2 pb-2">חשבון דיפרנציאלי ואינטגרלי</h1>
+                <p class="mb-6 text-lg">פרק זה עוסק בחקר פונקציות. נלמד כיצד למצוא את השיפוע של פונקציה בנקודה (נגזרת), להשתמש בו לחקירת תכונות הפונקציה (עליה, ירידה, קיצון), ולחשב שטחים הכלואים על ידי גרפים של פונקציות (אינטגרל).</p>
+
+                <article class="mb-12">
+                    <h2 class="text-2xl text-indigo-700 mb-4">נגזרת של פונקציית פולינום</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>כלל הגזירה:</strong> הנגזרת של $f(x) = ax^n$ היא $f'(x) = n \cdot ax^{n-1}$.</li>
+                            <li><strong>משמעות הנגזרת:</strong> הנגזרת בנקודה $x_0$, כלומר $f'(x_0)$, שווה לשיפוע המשיק לגרף הפונקציה באותה נקודה.</li>
+                            <li><strong>חקירת פונקציה:</strong> אם $f'(x) > 0$ בתחום מסוים, הפונקציה עולה. אם $f'(x) < 0$, הפונקציה יורדת. אם $f'(x) = 0$, הנקודה חשודה כנקודת קיצון (מינימום או מקסימום).</li>
+                        </ul>
+                    </div>
+                </article>
+                
+                <article>
+                    <h2 class="text-2xl text-indigo-700 mb-4">אינטגרל מסוים וחישוב שטחים</h2>
+                    <div class="info-box"><h3 class="text-xl font-semibold mb-2">מה צריך לדעת?</h3>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>הפעולה ההפוכה לגזירה (אינטגרל לא מסוים):</strong> האינטגרל של $ax^n$ הוא $\frac{ax^{n+1}}{n+1} + C$.</li>
+                            <li><strong>חישוב שטח:</strong> השטח הכלוא בין גרף הפונקציה $f(x)$ לציר ה-x, בין $x=a$ ל-$x=b$, כאשר הפונקציה אי-שלילית בתחום, נתון על ידי האינטגרל המסוים: $S = \int_a^b f(x)dx$.</li>
+                        </ul>
+                    </div>
+                    <div class="example-box"><h3 class="text-xl font-semibold mb-2">דוגמה (מבוסס על תרגיל 9, קיץ 2012)</h3><p>מצא את משוואת המשיק לפרבולה $y = x^2 - 4x + 7$ בנקודה שבה $x=3$.</p>
+                        <div class="mt-4"><div class="step"><div class="step-number">1</div><div><strong>מציאת שיעור ה-y של הנקודה:</strong> נציב $x=3$ במשוואת הפרבולה: $y = 3^2 - 4(3) + 7 = 9 - 12 + 7 = 4$. נקודת ההשקה היא $(3,4)$.</div></div>
+                        <div class="step"><div class="step-number">2</div><div><strong>מציאת הנגזרת:</strong> נגזור את הפונקציה: $y' = 2x - 4$.</div></div>
+                        <div class="step"><div class="step-number">3</div><div><strong>מציאת שיפוע המשיק:</strong> נציב $x=3$ בנגזרת: $m = y'(3) = 2(3) - 4 = 6 - 4 = 2$.</div></div>
+                        <div class="step"><div class="step-number">🏁</div><div><strong>מציאת משוואת המשיק:</strong> נשתמש בנוסחה למשוואת ישר עם שיפוע 2 ונקודה $(3,4)$:
+                        <div class="math-ltr">$y - 4 = 2(x - 3) \implies y - 4 = 2x - 6 \implies y = 2x - 2$</div></div></div></div>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
