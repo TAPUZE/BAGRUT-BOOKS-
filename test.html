@@ -1,0 +1,2514 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חוברת תרגילים במתמטיקה - מיסודות החשבון לחשבון דיפרנציאלי</title>
+    
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Noto+Serif+Hebrew:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans Hebrew', sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #2c3e50;
+            direction: rtl;
+            text-align: right;
+            background: white;
+            padding: 15mm;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        
+        @media print {
+            body {
+                padding: 10mm;
+                font-size: 12px;
+            }
+            
+            .chapter {
+                page-break-before: always;
+            }
+            
+            .chapter:first-child {
+                page-break-before: auto;
+            }
+            
+            .practice-exercise {
+                page-break-inside: avoid;
+            }
+            
+            .answer-key {
+                page-break-before: always;
+            }
+        }
+        
+        .workbook-header {
+            text-align: center;
+            padding: 20px 0 40px 0;
+            border-bottom: 3px solid #3498db;
+            margin-bottom: 30px;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-right: 4px solid #3498db;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .chapter {
+            margin-bottom: 40px;
+        }
+        
+        .chapter-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .chapter-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .chapter-recap {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 6px;
+            border-right: 3px solid #ecf0f1;
+        }
+        
+        .chapter-recap h4 {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .practice-section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .section-reminder {
+            background: #fff9e6;
+            border: 1px solid #f39c12;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .section-reminder h4 {
+            color: #d68910;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .section-reminder p {
+            color: #b7950b;
+            font-size: 13px;
+        }
+        
+        .exercises-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .practice-exercise {
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            background: white;
+            position: relative;
+        }
+        
+        .exercise-number {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #3498db;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .exercise-content {
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-question {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .difficulty-indicator {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .difficulty-indicator.קל {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+        
+        .difficulty-indicator.בינוני {
+            background: #fef9e7;
+            color: #f39c12;
+        }
+        
+        .difficulty-indicator.קשה {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+        
+        .answer-space {
+            border-top: 1px dashed #bdc3c7;
+            padding-top: 10px;
+        }
+        
+        .answer-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .answer-lines {
+            min-height: 60px;
+        }
+        
+        .answer-line {
+            height: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            margin-bottom: 3px;
+        }
+        
+        /* Answer Key Styles */
+        .answer-key {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid #e74c3c;
+        }
+        
+        .answer-key-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .answer-key-header h2 {
+            color: #e74c3c;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        
+        .answer-key-header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        .answer-chapter {
+            margin-bottom: 30px;
+        }
+        
+        .answer-chapter-title {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .answer-section {
+            margin-bottom: 25px;
+        }
+        
+        .answer-section-title {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .answer-list {
+            display: grid;
+            gap: 8px;
+        }
+        
+        .answer-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            border-right: 3px solid #27ae60;
+        }
+        
+        .answer-number {
+            font-weight: 600;
+            color: #27ae60;
+            margin-left: 8px;
+        }
+        
+        .answer-text {
+            color: #2c3e50;
+            font-size: 13px;
+        }
+        
+        h3, h4 {
+            color: #2c3e50;
+        }
+        
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            border-top: 2px solid #3498db;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="workbook-header">
+        <h1 class="main-title">חוברת תרגילים במתמטיקה</h1>
+        <p class="subtitle">מיסודות החשבון לחשבון דיפרנציאלי</p>
+    </div>
+    
+    <div class="instructions">
+        <h3>הוראות לשימוש</h3>
+        <p>חוברת תרגילים זו מיועדת לתרגול בצמוד לספר המתמטיקה הראשי. כל פרק כולל תזכורת מהירה של הנושא ותרגילים מדורגים לפי רמת קושי. 
+        השתמשו בחללים המיועדים לכתיבת התשובות והפתרונות. מפתח התשובות נמצא בסוף החוברת. בהצלחה!</p>
+    </div>
+    
+    
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 1: יסודות החשבון</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>פעולות חשבון בסיסיות: חיבור, חיסור, כפל וחילוק. סדר פעולות, עבודה עם שברים ואחוזים.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">ארבע פעולות החשבון</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>זכרו: תחילה סוגריים, אחר כך כפל וחילוק, לבסוף חיבור וחיסור (משמאל לימין).</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(25 + 17 - 9\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(8 \times 7 ÷ 4\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(5 + 6 \times 3\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \((12 + 8) ÷ 4\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(15 - 9 ÷ 3 + 4\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(3 \times (8 - 2) + 5\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">7.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(100 ÷ 4 ÷ 5\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">8.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(2 + 4 \times (6 - 3) - 1\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">9.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \((24 ÷ 6 + 2) \times 3\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">10.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(45 - 3 \times (8 + 2) ÷ 5\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">שברים ומספרים עשרוניים</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>לחיבור שברים - מצא מכנה משותף. לכפל שברים - כפל מונה במונה ומכנה במכנה.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{2}{5} + \frac{1}{5}\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{3}{4} \times \frac{2}{3}\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{1}{3} + \frac{1}{6}\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{5}{6} - \frac{1}{4}\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{2}{3} ÷ \frac{1}{6}\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">המר לשבר: \(0.375\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">7.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(2\frac{1}{3} + 1\frac{1}{4}\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">8.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\frac{4}{5} \times 2\frac{1}{2}\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">אחוזים ויחסים</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>אחוז = חלק חלקי 100. לחישוב אחוז מהמספר: המספר כפול האחוז חלקי 100.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מה זה 25% מ-80?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">30 הוא כמה אחוזים מ-120?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">במחלקה 32 תלמידים, 18 בנות. כמה אחוזים בנים?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מוצר עלה 150 ש"ח, יש עליו הנחה 20%. מה המחיר אחרי הנחה?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור פרופורציה: \(\frac{5}{8} = \frac{x}{24}\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מחיר עלה מ-200 ל-250 ש"ח. מה אחוז העלייה?</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 2: אלגברה בסיסית</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>פתרון משוואות ליניאריות ואי-שוויונות. עבודה עם נעלמים ופישוט ביטויים אלגבריים.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">משוואות ליניאריות</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>לפתרון משוואה: בודד את הנעלם בצד אחד, העבר מספרים לצד שני, חלק במקדם.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x + 7 = 12\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(3x = 21\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(2x + 3 = 11\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(5x - 8 = 17\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(4x + 1 = 2x + 9\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(\frac{x}{4} + 3 = 7\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">7.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(3(x - 2) = 15\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">8.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(\frac{2x + 3}{5} = 7\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">אי-שוויונות</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>כללי אי-שוויון דומים למשוואה, אך בכפל/חילוק במספר שלילי הכיוון מתהפך.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x + 4 > 10\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(3x \leq 12\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(2x - 1 > 7\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(-x + 6 \geq 2\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(5x - 2 < 3x + 8\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(-2x + 10 > 16\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 3: משוואות ריבועיות</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>פתרון משוואות ריבועיות בנוסחה ובפירוק. הבנת פרבולות, קודקודים וציר סימטריה.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">משוואות ריבועיות</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>לפתרון משוואה ריבועית: השתמש בנוסחה \(x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}\) או פרק לגורמים.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x^2 - 9 = 0\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x^2 - 5x + 6 = 0\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב את הדיסקרימיננטה: \(x^2 + 2x + 5 = 0\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x^2 + 6x + 9 = 0\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(2x^2 - 8x + 6 = 0\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">פתור: \(x^2 + 4x - 5 = 0\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">פרבולות</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>לפרבולה \(f(x) = ax^2 + bx + c\): קודקוד ב-\(x = -\frac{b}{2a}\), פתיחה מעלה אם \(a > 0\).</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא קודקוד הפרבולה \(f(x) = x^2 - 4x + 3\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">האם הפרבולה \(f(x) = -3x^2 + x - 1\) פתוחה מעלה או מטה?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא ציר סימטריה של \(f(x) = 2x^2 - 8x + 5\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">כתוב בצורה קנונית: \(f(x) = x^2 + 6x + 7\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 4: גאומטריה אנליטית</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>משולשים, מעגלים ותכונותיהם. חישוב שטחים, היקפים ועבודה במערכת צירים.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">משולשים</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>סכום זוויות משולש = 180°. משפט פיתגורס: \(a^2 + b^2 = c^2\) במשולש ישר זוויתי.</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">במשולש זוויות 60° ו-70°. מצא את הזווית השלישית.</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">משולש ישר זוויתי עם רגליים 5 ו-12. מצא את היתר.</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">שטח משולש עם בסיס 10 ס"מ וגובה 8 ס"מ.</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">במשולש שווה שוקיים הזווית בקודקוד 50°. מצא זוויות הבסיס.</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">משולש עם צלעות 7, 24, 25. האם זה משולש ישר זוויתי?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">היקף משולש שווה צלעות עם צלע באורך 6 ס"מ.</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">מעגלים וגאומטריה אנליטית</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>היקף מעגל: \(C = 2\pi r\), שטח: \(A = \pi r^2\). מרחק בין נקודות: \(d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\).</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מעגל ברדיוס 4 ס"מ. חשב את ההיקף.</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מעגל בקוטר 14 ס"מ. חשב את השטח.</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">היקף מעגל הוא \(12\pi\) ס"מ. מצא את הרדיוס.</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא מרחק בין \((1,3)\) ו-\((4,7)\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא שיפוע הישר העובר דרך \((2,1)\) ו-\((6,5)\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 5: טריגונומטריה</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>יחסים טריגונומטריים במשולש ישר זווית: sin, cos, tan. זוויות מיוחדות וזהויות בסיסיות.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">יחסים טריגונומטריים</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>\(\sin \alpha = \frac{תידגנ\;עלצ}{רתי}\), \(\cos \alpha = \frac{הכומס\;עלצ}{רתי}\), \(\tan \alpha = \frac{תידגנ\;עלצ}{הכומס\;עלצ}\)</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">במשולש ישר זווית עם צלעות 3, 4, 5, חשב \(\sin\) הזווית מול הצלע 3</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">אם \(\cos \beta = \frac{4}{5}\), מצא \(\sin \beta\) (זווית חדה)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב \(\sin 30°\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב \(\cos 60°\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב \(\tan 45°\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">6.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">אם \(\tan \gamma = \frac{3}{4}\), מצא \(\sin \gamma\) ו-\(\cos \gamma\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 6: הסתברות וסטטיסטיקה</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>חישוב הסתברויות, קומבינטוריקה - תמורות וצירופים. עקרונות ספירה בסיסיים.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">הסתברות בסיסית</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>הסתברות = \(\frac{תובוטה\;תואצותה\;רפסמ}{תוירשפאה\;תואצותה\;רפסמ}\). \(0 \leq P(A) \leq 1\)</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מה ההסתברות לקבל מספר זוגי בהטלת קובייה?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מה ההסתברות לשלוף מלך מחבילת קלפים?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">בקופסה 6 כדורים אדומים ו-4 כחולים. מה ההסתברות לשלוף כדור אדום?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מה ההסתברות לקבל סכום 8 בהטלת שתי קוביות?</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">אם \(P(A) = 0.3\) ו-\(P(B) = 0.4\) ו-A,B בלתי תלויים, מצא \(P(A \cap B)\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">קומבינטוריקה</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>תמורות: \(P(n,r) = \frac{n!}{(n-r)!}\), צירופים: \(C(n,r) = \frac{n!}{r!(n-r)!}\)</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב \(5!\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">בכמה דרכים ניתן לסדר 4 ספרים על מדף?</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">בכמה דרכים ניתן לבחור 3 תלמידים מתוך 8?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">בכמה דרכים ניתן לסדר 3 אנשים ברצף מתוך 7?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">כמה מילים (לא בהכרח עם משמעות) ניתן ליצור מהאותיות A,B,C,D?</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <h2 class="chapter-title">פרק 7: חשבון דיפרנציאלי</h2>
+                        <div class="chapter-recap">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>נגזרות של פונקציות פולינומיות ואינטגרלים בסיסיים. כללי גזירה ואינטגרציה.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-section">
+                        <h3 class="section-title">נגזרות</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>כללים: \(\frac{d}{dx}(x^n) = nx^{n-1}\), \(\frac{d}{dx}(f+g) = f' + g'\), \(\frac{d}{dx}(cf) = cf'\)</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא נגזרת: \(f(x) = x^4\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא נגזרת: \(g(x) = 3x^2 + 5x - 2\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא נגזרת: \(h(x) = \frac{1}{x^3}\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מצא נגזרת: \(f(x) = 2\sqrt{x} - \frac{4}{x}\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">מה הנגזרת של \(f(x) = x^3 - 6x^2 + 9x\) בנקודה \(x = 2\)?</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="practice-section">
+                        <h3 class="section-title">אינטגרלים</h3>
+                        <div class="section-reminder">
+                            <h4>תזכורת מהירה:</h4>
+                            <p>כללים: \(\int x^n dx = \frac{x^{n+1}}{n+1} + C\), \(\int_a^b f(x) dx = F(b) - F(a)\)</p>
+                        </div>
+                        <div class="exercises-grid">
+                            
+                    <div class="practice-exercise">
+                        <div class="exercise-number">1.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\int x^3 dx\)</div>
+                            <div class="difficulty-indicator קל">קל</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">2.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\int (2x + 5) dx\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">3.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\int_0^3 x^2 dx\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">4.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\int (x^3 - 2x + 1) dx\)</div>
+                            <div class="difficulty-indicator בינוני">בינוני</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="practice-exercise">
+                        <div class="exercise-number">5.</div>
+                        <div class="exercise-content">
+                            <div class="exercise-question">חשב: \(\int_1^4 \frac{1}{\sqrt{x}} dx\)</div>
+                            <div class="difficulty-indicator קשה">קשה</div>
+                        </div>
+                        <div class="answer-space">
+                            <div class="answer-label">תשובה:</div>
+                            <div class="answer-lines">
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                                <div class="answer-line"></div>
+                            </div>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+    
+    
+            <div class="answer-key">
+                <div class="answer-key-header">
+                    <h2>מפתח תשובות</h2>
+                    <p>כאן תוכלו למצוא את הפתרונות המלאים לכל התרגילים בחוברת</p>
+                </div>
+                
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 1: יסודות החשבון</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">ארבע פעולות החשבון</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(25 + 17 - 9 = 42 - 9 = 33\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(8 \times 7 ÷ 4 = 56 ÷ 4 = 14\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">לפי סדר פעולות: \(5 + 6 \times 3 = 5 + 18 = 23\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">תחילה סוגריים: \((12 + 8) ÷ 4 = 20 ÷ 4 = 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(15 - 3 + 4 = 16\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(3 \times 6 + 5 = 18 + 5 = 23\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">7.</span>
+                        <span class="answer-text">משמאל לימין: \(100 ÷ 4 ÷ 5 = 25 ÷ 5 = 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">8.</span>
+                        <span class="answer-text">\(2 + 4 \times 3 - 1 = 2 + 12 - 1 = 13\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">9.</span>
+                        <span class="answer-text">\((4 + 2) \times 3 = 6 \times 3 = 18\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">10.</span>
+                        <span class="answer-text">\(45 - 3 \times 10 ÷ 5 = 45 - 30 ÷ 5 = 45 - 6 = 39\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">שברים ומספרים עשרוניים</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(\frac{2}{5} + \frac{1}{5} = \frac{3}{5}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(\frac{3 \times 2}{4 \times 3} = \frac{6}{12} = \frac{1}{2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">מכנה משותף 6: \(\frac{2}{6} + \frac{1}{6} = \frac{3}{6} = \frac{1}{2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">מכנה משותף 12: \(\frac{10}{12} - \frac{3}{12} = \frac{7}{12}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(\frac{2}{3} ÷ \frac{1}{6} = \frac{2}{3} \times \frac{6}{1} = 4\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(0.375 = \frac{375}{1000} = \frac{3}{8}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">7.</span>
+                        <span class="answer-text">\(\frac{7}{3} + \frac{5}{4} = \frac{28}{12} + \frac{15}{12} = \frac{43}{12} = 3\frac{7}{12}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">8.</span>
+                        <span class="answer-text">\(\frac{4}{5} \times \frac{5}{2} = \frac{20}{10} = 2\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">אחוזים ויחסים</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(80 \times \frac{25}{100} = 20\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(\frac{30}{120} \times 100 = 25\%\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">14 בנים מתוך 32: \(\frac{14}{32} \times 100 = 43.75\%\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">הנחה: \(150 \times 0.2 = 30\). מחיר: \(150 - 30 = 120\) ש"ח</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(5 \times 24 = 8 \times x\), \(120 = 8x\), \(x = 15\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">עלייה: 50 ש"ח. \(\frac{50}{200} \times 100 = 25\%\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 2: אלגברה בסיסית</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">משוואות ליניאריות</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(x = 12 - 7 = 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(x = \frac{21}{3} = 7\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(2x = 11 - 3 = 8\), \(x = 4\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(5x = 17 + 8 = 25\), \(x = 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(4x - 2x = 9 - 1\), \(2x = 8\), \(x = 4\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(\frac{x}{4} = 4\), \(x = 16\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">7.</span>
+                        <span class="answer-text">\(3x - 6 = 15\), \(3x = 21\), \(x = 7\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">8.</span>
+                        <span class="answer-text">\(2x + 3 = 35\), \(2x = 32\), \(x = 16\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">אי-שוויונות</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(x > 10 - 4\), \(x > 6\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(x \leq 4\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(2x > 8\), \(x > 4\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(-x \geq -4\), \(x \leq 4\) (הכיוון התהפך)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(2x < 10\), \(x < 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(-2x > 6\), \(x < -3\) (הכיוון התהפך)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 3: משוואות ריבועיות</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">משוואות ריבועיות</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(x^2 = 9\), \(x = \pm 3\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\((x-2)(x-3) = 0\), \(x = 2\) או \(x = 3\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(\Delta = 4 - 20 = -16\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\((x+3)^2 = 0\), \(x = -3\) (פתרון כפול)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">חלק ב-2: \(x^2 - 4x + 3 = 0\), \((x-1)(x-3) = 0\), \(x = 1, 3\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(\Delta = 16 + 20 = 36\), \(x = \frac{-4 \pm 6}{2}\), \(x = 1, -5\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">פרבולות</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(x_v = \frac{4}{2} = 2\), \(y_v = 4 - 8 + 3 = -1\). קודקוד: \((2, -1)\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(a = -3 < 0\), לכן פתוחה מטה</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(x = -\frac{-8}{2 \cdot 2} = 2\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(f(x) = (x+3)^2 - 9 + 7 = (x+3)^2 - 2\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 4: גאומטריה אנליטית</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">משולשים</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(180° - 60° - 70° = 50°\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(c = \sqrt{5^2 + 12^2} = \sqrt{25 + 144} = \sqrt{169} = 13\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(S = \frac{1}{2} \times 10 \times 8 = 40\) ס"מ²</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">זוויות הבסיס שוות: \(\frac{180° - 50°}{2} = 65°\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(7^2 + 24^2 = 49 + 576 = 625 = 25^2\). כן, זה משולש ישר זוויתי.</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">\(P = 3 \times 6 = 18\) ס"מ</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">מעגלים וגאומטריה אנליטית</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(C = 2\pi \times 4 = 8\pi\) ס"מ</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(r = 7\), \(A = \pi \times 7^2 = 49\pi\) ס"מ²</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(2\pi r = 12\pi\), \(r = 6\) ס"מ</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(d = \sqrt{(4-1)^2 + (7-3)^2} = \sqrt{9 + 16} = 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(m = \frac{5-1}{6-2} = \frac{4}{4} = 1\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 5: טריגונומטריה</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">יחסים טריגונומטריים</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(\sin \alpha = \frac{3}{5} = 0.6\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(\sin^2 \beta = 1 - \cos^2 \beta = 1 - \frac{16}{25} = \frac{9}{25}\), \(\sin \beta = \frac{3}{5}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(\sin 30° = \frac{1}{2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(\cos 60° = \frac{1}{2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(\tan 45° = 1\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">6.</span>
+                        <span class="answer-text">אם \(\tan \gamma = \frac{3}{4}\), אז \(\sin \gamma = \frac{3}{5}\), \(\cos \gamma = \frac{4}{5}\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 6: הסתברות וסטטיסטיקה</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">הסתברות בסיסית</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">3 מספרים זוגיים (2,4,6) מתוך 6: \(P = \frac{3}{6} = \frac{1}{2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">4 מלכים מתוך 52 קלפים: \(P = \frac{4}{52} = \frac{1}{13}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(P = \frac{6}{10} = \frac{3}{5}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">דרכים: (2,6), (3,5), (4,4), (5,3), (6,2) = 5 דרכים מתוך 36. \(P = \frac{5}{36}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(P(A \cap B) = P(A) \times P(B) = 0.3 \times 0.4 = 0.12\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">קומבינטוריקה</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(4! = 24\) דרכים</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(C(8,3) = \frac{8!}{3! \times 5!} = \frac{8 \times 7 \times 6}{3 \times 2 \times 1} = 56\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(P(7,3) = \frac{7!}{4!} = 7 \times 6 \times 5 = 210\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(4! = 24\) מילים</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+                <div class="answer-chapter">
+                    <h3 class="answer-chapter-title">פרק 7: חשבון דיפרנציאלי</h3>
+                    
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">נגזרות</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(f'(x) = 4x^3\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(g'(x) = 6x + 5\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(h(x) = x^{-3}\), \(h'(x) = -3x^{-4} = -\frac{3}{x^4}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(f(x) = 2x^{1/2} - 4x^{-1}\), \(f'(x) = x^{-1/2} + 4x^{-2} = \frac{1}{\sqrt{x}} + \frac{4}{x^2}\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(f'(x) = 3x^2 - 12x + 9\), \(f'(2) = 12 - 24 + 9 = -3\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                    <div class="answer-section">
+                        <h4 class="answer-section-title">אינטגרלים</h4>
+                        <div class="answer-list">
+                            
+                    <div class="answer-item">
+                        <span class="answer-number">1.</span>
+                        <span class="answer-text">\(\int x^3 dx = \frac{x^4}{4} + C\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">2.</span>
+                        <span class="answer-text">\(\int (2x + 5) dx = x^2 + 5x + C\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">3.</span>
+                        <span class="answer-text">\(\int_0^3 x^2 dx = \left[\frac{x^3}{3}\right]_0^3 = \frac{27}{3} - 0 = 9\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">4.</span>
+                        <span class="answer-text">\(\int (x^3 - 2x + 1) dx = \frac{x^4}{4} - x^2 + x + C\)</span>
+                    </div>
+                
+                    <div class="answer-item">
+                        <span class="answer-number">5.</span>
+                        <span class="answer-text">\(\int_1^4 x^{-1/2} dx = [2\sqrt{x}]_1^4 = 2(2) - 2(1) = 2\)</span>
+                    </div>
+                
+                        </div>
+                    </div>
+                
+                </div>
+            
+            </div>
+        
+    
+    <div class="footer-note">
+        <p>חוברת תרגילים זו נוצרה במיוחד לתרגול מושגי המתמטיקה הנלמדים בספר הראשי.<br>
+        כל התרגילים מדורגים לפי רמת קושי ומיועדים להעמקת ההבנה ושיפור הכישורים.</p>
+    </div>
+</body>
+</html>
