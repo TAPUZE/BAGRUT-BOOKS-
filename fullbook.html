@@ -3,2110 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ספר מתמטיקה עצמאי - מהיסודות לחשבון דיפרנציאלי</title>
-    
-    <!-- MathJax Configuration -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['\\(', '\\)']],
-                displayMath: [['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
-        };
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
+    <title>יסודות המתמטיקה: מדריך הכנה</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <!-- KaTeX for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" xintegrity="sha384-n8MVd4RsNIU0KOVEMVIhbCwHlqMSXCJ8aGxMYoAOALZ4dYovRxEreqUo1kyWaVv3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" xintegrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" xintegrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=Noto+Serif+Hebrew:wght@400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Noto Serif Hebrew', serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #2c3e50;
-            direction: rtl;
-            text-align: right;
-            background: #f8f9fa;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Assistant', sans-serif;
+            color: #334155; /* slate-700 */
+            line-height: 1.7;
         }
-        
-        .textbook {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        h1, h2, h3, h4 {
+            font-family: 'Heebo', sans-serif;
+            color: #1e293b; /* slate-800 */
+            line-height: 1.3;
         }
-        
-        .title-page {
-            text-align: center;
-            padding: 60px 0;
-            border-bottom: 3px solid #3498db;
-            margin-bottom: 40px;
+        .textbook-container {
+            max-width: 8.5in;
+            min-height: 11in;
+            margin: 2rem auto;
+            padding: 1in;
+            background-color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0; /* slate-200 */
         }
-        
-        .main-title {
-            font-size: 48px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            font-size: 24px;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-        
-        .author-info {
-            font-size: 18px;
-            color: #34495e;
-        }
-        
-        .table-of-contents {
-            margin: 40px 0;
-            padding: 30px;
-            background: #ecf0f1;
-            border-radius: 8px;
-        }
-        
-        .toc-title {
-            font-size: 28px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .toc-chapter {
-            margin: 15px 0;
-            padding: 10px;
-            border-right: 4px solid #3498db;
-            background: white;
-            border-radius: 4px;
-        }
-        
-        .chapter-number {
-            font-weight: bold;
-            color: #3498db;
-            font-size: 18px;
-        }
-        
-        .chapter-title {
-            font-size: 20px;
-            color: #2c3e50;
-            margin: 5px 0;
-        }
-        
-        .chapter-description {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        .chapter {
-            margin: 50px 0;
-            page-break-before: always;
-        }
-        
         .chapter-header {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 30px;
-            border-radius: 10px 10px 0 0;
-            text-align: center;
+            border-bottom: 4px solid #4f46e5; /* indigo-600 */
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
         }
-        
-        .chapter-number-display {
-            font-size: 24px;
-            font-weight: 300;
+        .learning-goals {
+            background-color: #eef2ff; /* indigo-50 */
+            border-right: 4px solid #6366f1; /* indigo-500 */
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
         }
-        
-        .chapter-title-display {
-            font-size: 36px;
-            font-weight: 700;
-            margin: 10px 0;
+        .worked-example {
+            background-color: #f0fdf4; /* green-50 */
+            border: 1px solid #bbf7d0; /* green-200 */
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
         }
-        
-        .chapter-description-display {
-            font-size: 18px;
-            opacity: 0.9;
+        .common-mistake {
+            background-color: #fffbeb; /* yellow-50 */
+            border-right: 4px solid #facc15; /* yellow-400 */
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
         }
-        
-        .chapter-content {
-            background: white;
-            padding: 40px;
-            border: 1px solid #bdc3c7;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
+        .quiz, .final-exam, .answer-key {
+            background-color: #fafafa; /* neutral-50 */
+            border-top: 2px solid #d4d4d8; /* neutral-300 */
+            padding: 1.5rem;
+            margin-top: 2rem;
         }
-        
-        .lesson {
-            margin: 40px 0;
-            border: 1px solid #e8e8e8;
-            border-radius: 8px;
-            overflow: hidden;
+        .practice-set {
+            background-color: #f8fafc; /* slate-50 */
+            border: 1px solid #e2e8f0; /* slate-200 */
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
         }
-        
-        .lesson-title {
-            background: #f39c12;
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: 600;
-            text-align: center;
+        .chapter-break {
+            page-break-before: always;
+            padding-top: 1in;
         }
-        
-        .lesson-content {
-            padding: 30px;
+        .katex { font-size: 1.2em; direction: ltr; }
+        .practice-set ol, .quiz ol, .final-exam ol {
+            list-style-type: decimal;
+            list-style-position: inside;
+            margin-top: 1rem;
         }
-        
-        .theory-section {
-            margin-bottom: 30px;
-        }
-        
-        .formula-box {
-            background: #f8f9fa;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            font-size: 18px;
-        }
-        
-        .example-box {
-            background: #e8f6f3;
-            border-right: 5px solid #27ae60;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .example-box h5 {
-            color: #27ae60;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        
-        .exercises-section {
-            background: #fef9e7;
-            border: 1px solid #f1c40f;
-            border-radius: 8px;
-            padding: 25px;
-            margin-top: 30px;
-        }
-        
-        .exercises-title {
-            color: #f39c12;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .exercise {
-            background: white;
-            border: 1px solid #e67e22;
-            border-radius: 6px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .exercise-question {
-            font-weight: 600;
-            color: #e67e22;
-            margin-bottom: 10px;
-        }
-        
-        .exercise-solution {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 10px;
-            border-right: 3px solid #27ae60;
-        }
-        
-        .answers-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 2px solid #3498db;
-        }
-        
-        .answers-section h4 {
-            color: #2c3e50;
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 8px;
-        }
-        
-        .answer-item {
-            background: #ffffff;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            border-right: 4px solid #27ae60;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        h3 {
-            color: #2c3e50;
-            font-size: 22px;
-            margin: 25px 0 15px 0;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-        
-        h4 {
-            color: #34495e;
-            font-size: 18px;
-            margin: 20px 0 10px 0;
-        }
-        
-        h5 {
-            color: #7f8c8d;
-            font-size: 16px;
-            margin: 15px 0 8px 0;
-        }
-        
-        ul, ol {
-            margin: 15px 0;
-            padding-right: 30px;
-        }
-        
-        li {
-            margin: 8px 0;
-        }
-        
-        p {
-            margin: 12px 0;
-            text-align: justify;
-        }
-        
-        /* Math expressions */
-        mjx-container {
-            direction: ltr !important;
-            text-align: center !important;
-        }
-        
-        /* Print styles */
+         .practice-set li, .quiz li, .final-exam li {
+            margin-bottom: 0.75rem;
+            padding-right: 0.5rem;
+         }
+         p > span[dir="ltr"], li > span[dir="ltr"] {
+            display: inline-block;
+         }
         @media print {
             body {
-                background: white;
-                padding: 0;
+                background-color: white;
             }
-            
-            .textbook {
+            .textbook-container {
                 box-shadow: none;
-                padding: 20px;
-            }
-            
-            .chapter {
-                page-break-before: always;
+                border: none;
+                margin: 0;
+                padding: 0;
             }
         }
     </style>
 </head>
-<body>
-    <div class="textbook">
-        <div class="title-page">
-            <h1 class="main-title">ספר מתמטיקה עצמאי</h1>
-            <h2 class="subtitle">מהיסודות לחשבון דיפרנציאלי</h2>
-            <div class="author-info">
-                <p>ספר לימוד מקיף ועצמאי</p>
-                <p>כל הנושאים הדרושים למתמטיקה ברמת תיכון</p>
+<body class="bg-slate-100">
+
+    <div class="textbook-container">
+        <!-- Title Page -->
+        <div class="flex flex-col items-center justify-center h-full text-center" style="min-height: 9in;">
+            <h1 class="text-5xl font-bold mb-4">יסודות המתמטיקה</h1>
+            <h2 class="text-2xl text-slate-600">מדריך הכנה</h2>
+            <div class="mt-24 text-slate-500">
+                <p>ספר לימוד מבוא לבניית מיומנויות מתמטיות בסיסיות לחיים.</p>
             </div>
         </div>
-        
-        <div class="table-of-contents">
-            <h2 class="toc-title">תוכן העניינים</h2>
+
+        <!-- Introduction -->
+        <div class="chapter-break">
+            <h2 class="text-3xl font-bold mb-4">הקדמה לתלמיד/ה</h2>
+            <p class="mb-4">ברוכים הבאים ל<strong>יסודות המתמטיקה</strong>! ספר זה הוא המדריך שלכם לבניית הבנה חזקה וביטחון במיומנויות המתמטיות החיוניות שתשתמשו בהן בתיכון ובחיי היומיום. בין אם אתם מחשבים הנחה בחנות האהובה עליכם, מודדים מידות לפרויקט, או פשוט רוצים לחדד את הכישורים שלכם, הספר הזה הוא בשבילכם.</p>
+            <p class="mb-4">אנו נתחיל מהיסודות ונתקדם צעד אחר צעד. כל חלק מתוכנן להיות ברור וקל למעקב, עם דוגמאות מהעולם האמיתי שמראות לכם <em>למה</em> מתמטיקה חשובה. ספר זה מניח שאתם מתחילים מההתחלה, ולכן נסביר כל פרט בסבלנות.</p>
+            <h3 class="text-2xl font-bold mt-8 mb-4">איך להשתמש בספר:</h3>
+            <ol class="list-decimal list-inside space-y-2">
+                <li><strong>קראו את ההסברים:</strong> קחו את הזמן להבין את המושגים בכל חלק. אל תמהרו.</li>
+                <li><strong>עקבו אחר הדוגמאות:</strong> אנו נדריך אתכם בפתרון בעיות צעד אחר צעד. נסו להבין את הסיבה מאחורי כל שלב.</li>
+                <li><strong>תרגלו:</strong> הדרך הטובה ביותר ללמוד מתמטיקה היא פשוט לעשות אותה! פתרו את שאלות התרגול כדי לבחון את הבנתכם.</li>
+                <li><strong>בדקו את עבודתכם:</strong> הוספנו מפתח תשובות בסוף הספר, כך שתוכלו לבדוק את התקדמותכם וללמוד מהטעויות.</li>
+            </ol>
+            <p class="mt-8 text-xl font-semibold text-center text-indigo-600">בואו נתחיל!</p>
+        </div>
+
+        <!-- Chapter 1 -->
+        <div id="chapter1" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 1</h3>
+                <h2 class="text-4xl font-bold">אבני הבניין של המתמטיקה – חשבון בסיסי</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">דמיינו שאתם בבית קפה עם חברים. אתם מזמינים כמה משקאות וחטיפים, וכשהחשבון מגיע, אתם צריכים לחשב איך לחלק אותו. כל זה הוא חשבון בסיסי בפעולה!</p>
             
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 1</div>
-                <div class="chapter-title">יסודות החשבון</div>
-                <div class="chapter-description">ארבע פעולות החשבון, שברים ואחוזים</div>
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> שליטה בארבע פעולות החשבון: חיבור, חיסור, כפל וחילוק.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> הבנה ושימוש נכון בסדר פעולות חשבון.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> שימוש בסוגריים לקיבוץ מספרים ושליטה על סדר החישובים.</li>
+                </ul>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 2</div>
-                <div class="chapter-title">אלגברה בסיסית</div>
-                <div class="chapter-description">משוואות ליניאריות ואי-שוויונות</div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">1.1 ארבע פעולות החשבון</h3>
+            <p class="mt-4">אלו הן פעולות היסוד של כל המתמטיקה. בואו נבחן כל אחת מהן.</p>
+            <ul class="mt-4 space-y-4">
+                <li><strong>חיבור (+):</strong> צירוף מספרים כדי למצוא סכום כולל. אם יש לכם 5 תפוחים ואתם מקבלים עוד 3, יש לכם <span dir="ltr">$5+3=8$</span> תפוחים.</li>
+                <li><strong>חיסור (-):</strong> הפחתת מספר אחד ממשנהו כדי למצוא את ה'הפרש'. אם יש לכם 8 תפוחים ואכלתם 2, נשארו לכם <span dir="ltr">$8-2=6$</span> תפוחים.</li>
+                <li><strong>כפל (×):</strong> קיצור דרך לחיבור חוזר. אם אתם קונים 4 שקיות שבכל אחת 5 תפוחים, אפשר לחבר <span dir="ltr">$5+5+5+5$</span>, או פשוט לכפול <span dir="ltr">$4 \times 5 = 20$</span> תפוחים.</li>
+                <li><strong>חילוק (÷):</strong> חלוקת מספר לקבוצות שוות. אם יש לכם 20 תפוחים ואתם רוצים לחלק אותם שווה בשווה בין 4 חברים, כל חבר יקבל <span dir="ltr">$20 \div 4 = 5$</span> תפוחים.</li>
+            </ul>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">1.2 סדר פעולות חשבון</h3>
+            <p class="mt-4">כאשר יש לכם תרגיל עם מספר פעולות, כמו <span dir="ltr">$3 + 5 \times 2$</span>, איזה חלק פותרים קודם? אם נחבר קודם, נקבל <span dir="ltr">$8 \times 2 = 16$</span>. אם נכפול קודם, נקבל <span dir="ltr">$3 + 10 = 13$</span>. במתמטיקה חייב להיות כלל אחד ברור כדי שכולם יגיעו לאותה תשובה. הכלל הזה הוא **סדר פעולות חשבון**.</p>
+            
+            <div class="common-mistake">
+                <h4 class="text-xl font-bold mb-2">שימו לב! טעות נפוצה</h4>
+                <p>הטעות הנפוצה ביותר היא לבצע חיבור וחיסור לפני כפל וחילוק. זכרו, כפל וחילוק תמיד קודמים! בתרגיל <span dir="ltr">$3 + 5 \times 2$</span>, חייבים לבצע את הכפל <span dir="ltr">$5 \times 2$</span> קודם.</p>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 3</div>
-                <div class="chapter-title">משוואות ריבועיות</div>
-                <div class="chapter-description">פתרון משוואות ריבועיות ופרבולות</div>
+
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: פתרון לפי סדר פעולות חשבון</h4>
+                <p class="mb-2">נפתור את התרגיל <span dir="ltr">$10 + (6 - 2) \times 3 \div 2$</span>.</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li><strong>סוגריים:</strong> ראשית, פותרים מה שבתוך הסוגריים: <span dir="ltr">$(6 - 2) = 4$</span>. התרגיל הופך להיות: <span dir="ltr">$10 + 4 \times 3 \div 2$</span>.</li>
+                    <li><strong>כפל וחילוק (משמאל לימין):</strong> כעת, סורקים משמאל לימין ומחפשים כפל או חילוק. אנחנו רואים קודם <span dir="ltr">$4 \times 3$</span>. <span dir="ltr">$4 \times 3 = 12$</span>. התרגיל הוא עכשיו: <span dir="ltr">$10 + 12 \div 2$</span>.</li>
+                    <li>ממשיכים לסרוק משמאל. אנחנו רואים <span dir="ltr">$12 \div 2$</span>. <span dir="ltr">$12 \div 2 = 6$</span>. התרגיל הוא עכשיו: <span dir="ltr">$10 + 6$</span>.</li>
+                    <li><strong>חיבור וחיסור (משמאל לימין):</strong> הדבר היחיד שנשאר הוא חיבור. <span dir="ltr">$10 + 6 = 16$</span>.</li>
+                </ol>
+                <p class="mt-2 font-bold">התשובה הסופית היא 16.</p>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 4</div>
-                <div class="chapter-title">גאומטריה אנליטית</div>
-                <div class="chapter-description">נקודות, ישרים ומעגלים במישור</div>
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 1</h3>
+                <ol>
+                    <li><span dir="ltr">$250 + 175 - 50 =$</span></li>
+                    <li><span dir="ltr">$18 + 24 \div 6 =$</span></li>
+                    <li><span dir="ltr">$(5 + 3) \times (10 - 6) =$</span></li>
+                    <li>אתם מרוויחים 40 ש"ח לשעה. עבדתם 3 שעות ביום שישי ו-5 שעות בשבת. כמה כסף הרווחתם בסך הכל?</li>
+                    <li>בספרייה יש 5 מדפים, ובכל מדף 30 ספרים. אם 22 ספרים הושאלו, כמה ספרים נשארו על המדפים?</li>
+                    <li><span dir="ltr">$120 \div (10 - 4) =$</span></li>
+                    <li><span dir="ltr">$(50 - 10) \div (2 + 6) =$</span></li>
+                    <li>קניתם 4 כוסות קפה במחיר 12 ש"ח כל אחת, והשארתם 10 ש"ח טיפ. כמה שילמתם בסך הכל?</li>
+                    <li>בספר יש 200 עמודים. קראתם 45 עמודים ביום שני ו-60 ביום שלישי. כמה עמודים נשארו לקריאה?</li>
+                </ol>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 5</div>
-                <div class="chapter-title">טריגונומטריה</div>
-                <div class="chapter-description">יחסים טריגונומטריים במשולש ישר זווית</div>
+        </div>
+
+        <!-- Chapter 2 -->
+        <div id="chapter2" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 2</h3>
+                <h2 class="text-4xl font-bold">עבודה עם חלקים – שברים ומספרים עשרוניים</h2>
+            </header>
+             <p class="text-lg italic text-slate-600 mb-6">האם אי פעם חלקתם פיצה? או השתמשתם במתכון שדרש $\frac{1}{2}$ כוס סוכר? שברים ומספרים עשרוניים הם הדרך שלנו לדבר על חלקים מתוך שלם.</p>
+            
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> שליטה בפעולות עם שברים ומספרים עשרוניים.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> הבנת ערך המקום במספרים עשרוניים.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> המרת מספרים בין שבר למספר עשרוני.</li>
+                </ul>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 6</div>
-                <div class="chapter-title">הסתברות וסטטיסטיקה</div>
-                <div class="chapter-description">מושגי יסוד בהסתברות ומדדי מרכז</div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">2.1 פעולות עם שברים</h3>
+            <p class="mt-4">הכלל החשוב ביותר בחיבור וחיסור שברים הוא: **המכנים חייבים להיות זהים.** בכפל, פשוט כופלים מונה במונה ומכנה במכנה. בחילוק, משתמשים בשיטת "הופכים וכופלים".</p>
+            <div class="my-6 flex justify-center">
+                <svg width="150" height="150" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="#fde68a"/>
+                    <path d="M 50 50 L 50 5 A 45 45 0 0 1 88.9 28.2 Z" fill="#ef4444"/>
+                    <path d="M 50 50 L 88.9 28.2 A 45 45 0 0 1 95 50 Z" fill="#ef4444"/>
+                    <path d="M 50 50 L 95 50 A 45 45 0 0 1 88.9 71.8 Z" fill="#ef4444"/>
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#4b5563" stroke-width="2"/>
+                    <line x1="50" y1="5" x2="50" y2="95" stroke="#4b5563" stroke-width="1"/>
+                    <line x1="5" y1="50" x2="95" y2="50" stroke="#4b5563" stroke-width="1"/>
+                    <line x1="11.1" y1="28.2" x2="88.9" y2="71.8" stroke="#4b5563" stroke-width="1"/>
+                    <line x1="28.2" y1="11.1" x2="71.8" y2="88.9" stroke="#4b5563" stroke-width="1"/>
+                    <text x="75" y="25" font-family="Heebo" font-size="10" fill="black">$\frac{3}{8}$</text>
+                </svg>
             </div>
-        
-            <div class="toc-chapter">
-                <div class="chapter-number">פרק 7</div>
-                <div class="chapter-title">חשבון דיפרנציאלי</div>
-                <div class="chapter-description">נגזרות ויישומים</div>
+
+            <div class="common-mistake">
+                <h4 class="text-xl font-bold mb-2">שימו לב! טעות נפוצה</h4>
+                <p>זכרו, **חייבים** למצוא מכנה משותף לפני חיבור וחיסור שברים. לעומת זאת, בכפל וחילוק, **אין צורך** במכנה משותף.</p>
             </div>
-        
+
+            <div class="practice-set">
+                <h4 class="text-xl font-bold mb-2">סט תרגול 2.1: שברים</h4>
+                <ol>
+                    <li><span dir="ltr">$\frac{1}{5} + \frac{3}{5} =$</span></li>
+                    <li><span dir="ltr">$\frac{5}{8} - \frac{1}{8} =$</span></li>
+                    <li><span dir="ltr">$\frac{2}{3} + \frac{1}{6} =$</span></li>
+                    <li><span dir="ltr">$\frac{3}{4} \times \frac{1}{5} =$</span></li>
+                    <li><span dir="ltr">$\frac{1}{2} \div \frac{1}{8} =$</span></li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">2.2 הבנת מספרים עשרוניים</h3>
+            <p class="mt-4">מספרים עשרוניים הם דרך נוספת לכתוב שברים שהמכנה שלהם הוא 10, 100, 1000 וכו'. הנקודה העשרונית מפרידה בין המספרים השלמים לחלק השברי. כל ספרה אחרי הנקודה מייצגת ערך מקום: עשיריות, מאיות, אלפיות.</p>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">2.3 פעולות עם מספרים עשרוניים</h3>
+            <p class="mt-4">בחיבור וחיסור, הכלל הוא **לסדר את המספרים כך שהנקודות העשרוניות יהיו אחת מתחת לשנייה**. בכפל, כופלים כרגיל ואז ממקמים את הנקודה העשרונית בתשובה.</p>
+            
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: כפל מספרים עשרוניים</h4>
+                <p class="mb-2">פתרו את התרגיל $4.5 \times 2.3$.</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li><strong>התעלמו מהנקודות:</strong> כפלו $45 \times 23$. התוצאה היא $1035$.</li>
+                    <li><strong>ספרו את המקומות העשרוניים:</strong> למספר $4.5$ יש ספרה אחת אחרי הנקודה. למספר $2.3$ יש ספרה אחת אחרי הנקודה. בסך הכל, שני מקומות עשרוניים.</li>
+                    <li><strong>מקמו את הנקודה בתשובה:</strong> התחילו מהצד הימני של $1035$ והזיזו את הנקודה שני מקומות שמאלה.</li>
+                </ol>
+                <p class="mt-2 font-bold">התשובה הסופית היא $10.35$.</p>
+            </div>
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 2</h3>
+                <ol>
+                    <li><span dir="ltr">$\frac{3}{8} + \frac{1}{4} =$</span></li>
+                    <li><span dir="ltr">$\frac{7}{10} - \frac{1}{2} =$</span></li>
+                    <li><span dir="ltr">$\frac{2}{3} \div \frac{4}{9} =$</span></li>
+                    <li>המירו את $0.6$ לשבר מצומצם.</li>
+                    <li>מתכון דורש $\frac{3}{4}$ כוס קמח. אתם רוצים להכין רק חצי מהכמות. בכמה קמח תשתמשו?</li>
+                    <li><span dir="ltr">$24.5 + 8.62 =$</span></li>
+                    <li><span dir="ltr">$15.7 - 5.35 =$</span></li>
+                    <li>המירו את $\frac{2}{5}$ למספר עשרוני.</li>
+                    <li>קניתם פריט ב-7.50 ש"ח ושילמתם בשטר של 10 ש"ח. כמה עודף תקבלו?</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Chapter 3 -->
+        <div id="chapter3" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 3</h3>
+                <h2 class="text-4xl font-bold">הבנת יחסים – אחוזים</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">"50% הנחה!" "מומלץ להשאיר 20% טיפ." אחוזים הם סוג מיוחד של יחס שאנו משתמשים בו כל יום, במיוחד כשמדובר בכסף.</p>
+            
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> להבין מהו אחוז.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> להמיר בין אחוזים, שברים ומספרים עשרוניים.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> לפתור בעיות מהעולם האמיתי הכוללות הנחות ומסים.</li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">3.1 מהו אחוז?</h3>
+            <p class="mt-4">המילה "אחוז" פירושה "מתוך מאה". אחוז הוא פשוט שבר מיוחד שהמכנה שלו תמיד 100. לכן, $50\%$ זו דרך אחרת לומר $\frac{50}{100}$, או חצי. הדרך הקלה ביותר לעבוד עם אחוזים היא להמיר אותם למספרים עשרוניים.</p>
+            <ul class="mt-4 space-y-2">
+                <li><strong>מאחוז לעשרוני:</strong> הזיזו את הנקודה העשרונית שני מקומות שמאלה והסירו את סימן ה-%. $45\% \rightarrow 0.45$.</li>
+                <li><strong>מעשרוני לאחוז:</strong> הזיזו את הנקודה העשרונית שני מקומות ימינה והוסיפו את סימן ה-%. $0.7 \rightarrow 70\%$.</li>
+            </ul>
+
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: חישוב הנחה</h4>
+                <p class="mb-2">מעיל עולה 200 ש"ח. הוא נמכר ב-20% הנחה. מהו המחיר הסופי?</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li><strong>מצאו את סכום ההנחה:</strong> אנחנו צריכים למצוא $20\%$ מתוך $200$. ראשית, נמיר $20\%$ למספר עשרוני, שהוא $0.20$. המילה "מתוך" במתמטיקה כמעט תמיד פירושה כפל. לכן, נחשב $0.20 \times 200 = 40$. סכום ההנחה הוא 40 ש"ח.</li>
+                    <li><strong>הפחיתו את ההנחה מהמחיר המקורי:</strong> $200 - 40 = 160$ ש"ח.</li>
+                </ol>
+                <p class="mt-2 font-bold">המחיר הסופי הוא 160 ש"ח.</p>
+            </div>
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 3</h3>
+                <ol>
+                    <li>המירו $40\%$ לשבר מצומצם.</li>
+                    <li>המירו $0.07$ לאחוז.</li>
+                    <li>כמה הם $60\%$ מתוך $150$?</li>
+                    <li>זוג נעליים עולה 300 ש"ח ונמכר ב-$25\%$ הנחה. מהו המחיר הסופי?</li>
+                    <li>עניתם נכון על 45 מתוך 50 שאלות במבחן. מהו הציון שלכם באחוזים?</li>
+                    <li>מצאו $150\%$ מתוך $20$.</li>
+                    <li>חשבון במסעדה הוא 250 ש"ח. אם המע"מ הוא $17\%$, מהו הסכום הכולל לתשלום?</li>
+                    <li>קיבלתם 18 מתוך 20 בבוחן. מהו הציון שלכם באחוזים?</li>
+                    <li>המירו $125\%$ למספר עשרוני.</li>
+                </ol>
+            </div>
         </div>
         
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 1</div>
-                    <div class="chapter-title-display">יסודות החשבון</div>
-                    <div class="chapter-description-display">ארבע פעולות החשבון, שברים ואחוזים</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">ארבע פעולות החשבון</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>ארבע פעולות החשבון הבסיסיות</h3>
-                        <p>חשבון הוא הבסיס לכל המתמטיקה. ארבע הפעולות הבסיסיות הן:</p>
-                        <ul>
-                            <li><strong>חיבור (+):</strong> הוספת מספרים</li>
-                            <li><strong>חיסור (−):</strong> הפחתת מספרים</li>
-                            <li><strong>כפל (×):</strong> הכפלת מספרים</li>
-                            <li><strong>חילוק (÷):</strong> חלוקת מספרים</li>
-                        </ul>
-                        
-                        <h4>סדר פעולות (סדר עדיפויות)</h4>
-                        <p>בביטוי מתמטי מורכב, נתבצע את הפעולות בסדר הבא:</p>
-                        <ol>
-                            <li><strong>סוגריים</strong> - מה שבתוך הסוגריים קודם</li>
-                            <li><strong>חזקות ושורשים</strong></li>
-                            <li><strong>כפל וחילוק</strong> (משמאל לימין)</li>
-                            <li><strong>חיבור וחיסור</strong> (משמאל לימין)</li>
+        <!-- Chapter 4 -->
+        <div id="chapter4" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 4</h3>
+                <h2 class="text-4xl font-bold">חזקות ושורשים – יסודות המעריכים</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">האם שמעתם פעם על שטח של חדר ב"מטר רבוע"? או ראיתם מספר כמו $10^2$? אלו הם חזקות ושורשים, קיצור דרך לכפל חוזר.</p>
+            
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                     <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> להבין את המשמעות של חזקות ובסיסים.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> לחשב ערך של מספרים עם חזקות טבעיות.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> להבין שורשים ריבועיים כפעולה הפוכה לחזקה.</li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">4.1 מהי חזקה?</h3>
+            <p class="mt-4">**חזקה** היא מספר קטן הנכתב למעלה מימין למספר רגיל. זהו קיצור מתמטי לכפל חוזר. בביטוי $5^2$: ה-$5$ הוא **הבסיס** וה-$2$ הוא **המעריך**. זה אומר $5 \times 5 = 25$.</p>
+
+            <div class="practice-set">
+                <h4 class="text-xl font-bold mb-2">סט תרגול 4.1: חזקות</h4>
+                <ol>
+                    <li>חשבו את <span dir="ltr">$3^3$</span> (כלומר $3 \times 3 \times 3$).</li>
+                    <li>חשבו את <span dir="ltr">$10^2$</span>.</li>
+                    <li>חשבו את <span dir="ltr">$2^5$</span>.</li>
+                    <li>חשבו את <span dir="ltr">$7^1$</span>.</li>
+                </ol>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">4.2 מהו שורש ריבועי?</h3>
+            <p class="mt-4">**שורש ריבועי** ($\sqrt{}$) הוא הפעולה ההפוכה להעלאה בריבוע. הוא שואל: "איזה מספר, כשהוא מוכפל בעצמו, נותן את המספר הזה?" לכן, $\sqrt{25} = 5$.</p>
+
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: שימוש בחזקות ושורשים</h4>
+                <p class="mb-2">למרפסת ריבועית יש שטח של 64 מטר רבוע. מה אורך אחת הצלעות שלה?</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li><strong>הבנת הקשר:</strong> הנוסחה לשטח ריבוע היא $שטח = צלע^2$. אנחנו יודעים את השטח, אבל לא את אורך הצלע.</li>
+                    <li><strong>בניית המשוואה:</strong> $64 = צלע^2$.</li>
+                    <li><strong>מציאת הפעולה ההפוכה:</strong> כדי למצוא את הצלע, עלינו לבצע את הפעולה ההפוכה להעלאה בריבוע, כלומר הוצאת שורש ריבועי.</li>
+                    <li><strong>חישוב:</strong> $צלע = \sqrt{64}$. אנו שואלים, "איזה מספר כפול עצמו שווה 64?" התשובה היא 8.</li>
+                </ol>
+                <p class="mt-2 font-bold">אורך כל צלע של המרפסת הוא 8 מטרים.</p>
+            </div>
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 4</h3>
+                <ol>
+                    <li>חשבו את <span dir="ltr">$6^2$</span>.</li>
+                    <li>חשבו את <span dir="ltr">$2^4$</span>.</li>
+                    <li>מצאו את <span dir="ltr">$\sqrt{64}$</span>.</li>
+                    <li>מצאו את <span dir="ltr">$\sqrt{121}$</span>.</li>
+                    <li>לפטיו ריבועי יש צלע באורך 8 מטר. מה שטחו?</li>
+                    <li>שטחו של לוח משחק ריבועי הוא 100 סמ"ר. מה אורך אחת הצלעות?</li>
+                    <li>חשבו את <span dir="ltr">$1^{100}$</span>.</li>
+                    <li>מצאו את <span dir="ltr">$\sqrt{169}$</span>.</li>
+                    <li>לציור ריבועי יש שטח של 81 מ"ר. מה אורך אחת מצלעותיו?</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Chapter 5 -->
+        <div id="chapter5" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 5</h3>
+                <h2 class="text-4xl font-bold">פתרון הנעלם – משוואות פשוטות</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">דמיינו מאזניים מאוזנים. אם תוסיפו משקל לצד אחד, תצטרכו להוסיף את אותו המשקל לצד השני כדי לשמור על האיזון. זהו הרעיון המרכזי באלגברה.</p>
+            
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> לפתור משוואות בצעד אחד ובשני צעדים.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> להשתמש בפעולות הפוכות כדי לבודד משתנה.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> לתרגם בעיות מילוליות פשוטות למשוואות.</li>
+                </ul>
+            </div>
+            
+            <div class="my-6 flex justify-center">
+                <svg width="200" height="120" viewBox="0 0 200 120">
+                    <line x1="10" y1="20" x2="190" y2="20" stroke="#4b5563" stroke-width="2"/>
+                    <line x1="100" y1="20" x2="100" y2="40" stroke="#4b5563" stroke-width="2"/>
+                    <polygon points="80,110 120,110 100,40" fill="#a5b4fc"/>
+                    <rect x="20" y="5" width="40" height="15" fill="#fca5a5"/>
+                    <text x="40" y="17" text-anchor="middle" font-family="Heebo" font-size="12">$x+3$</text>
+                    <rect x="140" y="5" width="40" height="15" fill="#a5f3fc"/>
+                    <text x="160" y="17" text-anchor="middle" font-family="Heebo" font-size="12">$10$</text>
+                </svg>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">5.1 משוואות בשני צעדים</h3>
+            <p class="mt-4">במשוואות אלו יש שתי פעולות שמתבצעות על המשתנה. למשל, ב-$2x + 3 = 11$, המשתנה $x$ מוכפל ב-2, ואז מוסיפים לו 3. כדי לפתור, אנו מבטלים את הפעולות בסדר הפוך לסדר פעולות חשבון. קודם מבטלים חיבור/חיסור, ואז כפל/חילוק.</p>
+
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: פתרון משוואה בשני צעדים</h4>
+                <p class="mb-2">פתרו את המשוואה $2x + 3 = 11$.</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li><strong>המטרה:</strong> לבודד את $x$.</li>
+                    <li><strong>בטלו את החיבור תחילה:</strong> הפעולה ההפוכה לחיבור 3 היא חיסור 3. בצעו זאת בשני האגפים.</li>
+                    <li>$2x + 3 - 3 = 11 - 3$</li>
+                    <li>המשוואה מצטמצמת ל-$2x = 8$.</li>
+                    <li><strong>בטלו את הכפל:</strong> הפעולה ההפוכה לכפל ב-2 היא חילוק ב-2. בצעו זאת בשני האגפים.</li>
+                    <li>$\frac{2x}{2} = \frac{8}{2}$</li>
+                    <li>המשוואה מצטמצמת ל-$x = 4$.</li>
+                </ol>
+                <p class="mt-2 font-bold">הפתרון הוא 4. בדיקה: $2(4) + 3 = 8 + 3 = 11$. זה נכון.</p>
+            </div>
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 5</h3>
+                <ol>
+                    <li>פתרו: <span dir="ltr">$x + 11 = 25$</span></li>
+                    <li>פתרו: <span dir="ltr">$9x = 54$</span></li>
+                    <li>פתרו: <span dir="ltr">$\frac{x}{5} = 6$</span></li>
+                    <li>פתרו: <span dir="ltr">$3x - 5 = 10$</span></li>
+                    <li>פתרו: <span dir="ltr">$\frac{x}{2} + 7 = 11$</span></li>
+                    <li>חולצה עולה 80 ש"ח לאחר הנחה של 20 ש"ח. מה היה המחיר המקורי? כתבו ופתרו משוואה.</li>
+                    <li>לשרה יש 62 בולים, לאחר שקיבלה 15 בולים נוספים. כמה בולים היו לה בהתחלה? כתבו ופתרו משוואה.</li>
+                    <li>קניתם 3 כרטיסים לקולנוע ושילמתם 5 ש"ח עמלה. העלות הכוללת הייתה 125 ש"ח. כמה עלה כל כרטיס? כתבו ופתרו משוואה.</li>
+                    <li>פתרו: <span dir="ltr">$5x + 4 = 29$</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Chapter 6 -->
+        <div id="chapter6" class="chapter-break">
+            <header class="chapter-header">
+                <h3 class="text-sm font-semibold text-slate-500">פרק 6</h3>
+                <h2 class="text-4xl font-bold">עולם הצורות – גיאומטריה בסיסית</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">הביטו סביבכם. תראו צורות בכל מקום: המסך המלבני, השעון העגול. גיאומטריה היא חקר הצורות הללו.</p>
+            
+            <div class="learning-goals">
+                <h4 class="text-xl font-bold mb-3">מטרות למידה לפרק זה:</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> זיהוי צורות גיאומטריות וזוויות בסיסיות.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> חישוב היקף (המרחק מסביב) של צורה.</li>
+                    <li class="flex items-start"><span class="text-indigo-500 ml-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span> חישוב שטח (המרחב שבתוך) של צורה.</li>
+                </ul>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">6.1 זוויות</h3>
+            <p class="mt-4">**זווית** נוצרת במפגש בין שני קווים. אנו מודדים זוויות ב**מעלות** ($^\circ$). מעגל שלם הוא $360^\circ$. עובדה חשובה לזכור היא ש**סכום שלוש הזוויות בתוך כל משולש הוא תמיד $180^\circ$.**</p>
+             <div class="practice-set">
+                <h4 class="text-xl font-bold mb-2">סט תרגול 6.1: זוויות</h4>
+                <ol>
+                    <li>אם במשולש יש שתי זוויות בגודל $30^\circ$ ו-$60^\circ$, מה גודל הזווית השלישית?</li>
+                    <li>במשולש ישר-זווית יש זווית אחת של $50^\circ$. מה גודל הזווית השלישית?</li>
+                </ol>
+            </div>
+
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">6.2 היקף: המרחק מסביב</h3>
+            <p class="mt-4">היקף הוא המרחק הכולל סביב צורה. כדי למצוא אותו, פשוט **מחברים את אורכי כל הצלעות**.</p>
+            <div class="practice-set">
+                <h4 class="text-xl font-bold mb-2">סט תרגול 6.2: היקף</h4>
+                <ol>
+                    <li>מהו ההיקף של ריבוע שאורך צלעו 5 ס"מ?</li>
+                    <li>למשולש יש צלעות באורך 10 מ', 12 מ' ו-15 מ'. מה היקפו?</li>
+                </ol>
+            </div>
+            
+            <h3 class="text-2xl font-bold mt-8 border-b pb-2">6.3 שטח: המרחב שבפנים</h3>
+            <p class="mt-4">שטח הוא כמות המרחב השטוח שצורה מכסה. הוא נמדד ב**יחידות ריבועיות** (כמו $סמ"ר, מ"ר$).</p>
+            <ul class="list-disc list-inside mt-2">
+                <li><strong>שטח מלבן:</strong> $שטח = אורך \times רוחב$</li>
+                <li><strong>שטח ריבוע:</strong> $שטח = צלע \times צלע = צלע^2$</li>
+            </ul>
+            <div class="practice-set">
+                <h4 class="text-xl font-bold mb-2">סט תרגול 6.3: שטח</h4>
+                <ol>
+                    <li>מהו שטחו של מלבן שאורכו 8 ס"מ ורוחבו 5 ס"מ?</li>
+                    <li>מהו שטחו של ריבוע שאורך צלעו 10 מטר?</li>
+                </ol>
+            </div>
+
+            <div class="worked-example mt-4">
+                <h4 class="text-lg font-bold mb-2">דוגמה פתורה: שטח והיקף של מלבן</h4>
+                <div class="flex flex-col md:flex-row items-center md:space-x-8">
+                    <div class="flex-shrink-0 mb-4 md:mb-0">
+                        <svg width="200" height="140" viewBox="0 0 200 140" class="bg-white border rounded-lg">
+                            <rect x="10" y="10" width="180" height="120" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
+                            <text x="100" y="135" font-family="Heebo" font-size="14" fill="#1e293b" text-anchor="middle">אורך = 10 מ'</text>
+                            <text x="15" y="75" font-family="Heebo" font-size="14" fill="#1e293b" text-anchor="start">רוחב = 8 מ'</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="mb-2">חדר מלבני אורכו 10 מטר ורוחבו 8 מטר. מצאו את היקפו ושטחו.</p>
+                        <p><strong>היקף:</strong></p>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li>למלבן יש ארבע צלעות: שני אורכים ושני רחבים. הצלעות הן 10, 8, 10, 8.</li>
+                            <li>חברו את כולן: $10 + 8 + 10 + 8 = 36$ מטר.</li>
                         </ol>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה מפורטת:</h5>
-                            <p>חשב: \(2 + 3 \times 4 - (8 ÷ 2)\)</p>
-                            <p><strong>פתרון שלב אחר שלב:</strong></p>
-                            <p>שלב 1: סוגריים - \(8 ÷ 2 = 4\)</p>
-                            <p>שלב 2: כפל - \(3 \times 4 = 12\)</p>
-                            <p>שלב 3: חיבור וחיסור משמאל לימין:</p>
-                            <p>\(2 + 12 - 4 = 14 - 4 = 10\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: חשב: \(15 + 8 - 6\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: חשב: \(7 \times 6 ÷ 2\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: חשב: \(3 + 4 \times 2\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: חשב: \((5 + 3) \times 2\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: חשב: \(20 - 12 ÷ 4 + 3\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: חשב: \(6 \times (4 + 2) - 10\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: חשב: \(100 ÷ 5 ÷ 4\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: חשב: \(2 + 3 \times (4 - 1) + 5\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(15 + 8 - 6 = 23 - 6 = 17\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(7 \times 6 ÷ 2 = 42 ÷ 2 = 21\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> לפי סדר פעולות: \(3 + 4 \times 2 = 3 + 8 = 11\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> תחילה סוגריים: \((5 + 3) \times 2 = 8 \times 2 = 16\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> תחילה חילוק: \(20 - 3 + 3 = 20\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(6 \times 6 - 10 = 36 - 10 = 26\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> משמאל לימין: \(100 ÷ 5 ÷ 4 = 20 ÷ 4 = 5\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> \(2 + 3 \times 3 + 5 = 2 + 9 + 5 = 16\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">שברים ומספרים עשרוניים</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>עבודה עם שברים</h3>
-                        <p>שבר מייצג חלק מתוך שלם. השבר \(\frac{a}{b}\) אומר שחילקנו את השלם ל-b חלקים שווים ולקחנו a חלקים.</p>
-                        
-                        <h4>פעולות בשברים</h4>
-                        
-                        <h5>חיבור וחיסור שברים</h5>
-                        <p>כדי לחבר או לחסר שברים, צריך למצוא מכנה משותף:</p>
-                        <div class="formula-box">
-                            \(\frac{a}{c} + \frac{b}{c} = \frac{a+b}{c}\)
-                        </div>
-                        
-                        <h5>כפל שברים</h5>
-                        <div class="formula-box">
-                            \(\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}\)
-                        </div>
-                        
-                        <h5>חילוק שברים</h5>
-                        <div class="formula-box">
-                            \(\frac{a}{b} ÷ \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}\)
-                        </div>
-                        
-                        <h4>מספרים עשרוניים</h4>
-                        <p>מספר עשרוני הוא דרך נוספת לכתוב שבר. למשל: \(0.5 = \frac{1}{2}\)</p>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה מפורטת:</h5>
-                            <p>חשב: \(\frac{2}{3} + \frac{1}{4}\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>המכנה המשותף הקטן של 3 ו-4 הוא 12:</p>
-                            <p>\(\frac{2}{3} = \frac{2 \times 4}{3 \times 4} = \frac{8}{12}\)</p>
-                            <p>\(\frac{1}{4} = \frac{1 \times 3}{4 \times 3} = \frac{3}{12}\)</p>
-                            <p>\(\frac{8}{12} + \frac{3}{12} = \frac{11}{12}\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: חשב: \(\frac{1}{2} + \frac{1}{3}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: חשב: \(\frac{3}{4} \times \frac{2}{5}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: חשב: \(\frac{2}{3} - \frac{1}{6}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: חשב: \(\frac{1}{2} ÷ \frac{1}{4}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: המר לשבר: \(0.75\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: חשב: \(\frac{5}{6} + \frac{1}{3}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: חשב: \(2\frac{1}{4} + 1\frac{1}{2}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: המר למספר עשרוני: \(\frac{3}{8}\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> מכנה משותף 6: \(\frac{3}{6} + \frac{2}{6} = \frac{5}{6}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(\frac{3 \times 2}{4 \times 5} = \frac{6}{20} = \frac{3}{10}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> מכנה משותף 6: \(\frac{4}{6} - \frac{1}{6} = \frac{3}{6} = \frac{1}{2}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(\frac{1}{2} ÷ \frac{1}{4} = \frac{1}{2} \times \frac{4}{1} = 2\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(0.75 = \frac{75}{100} = \frac{3}{4}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> מכנה משותף 6: \(\frac{5}{6} + \frac{2}{6} = \frac{7}{6}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> \(2\frac{1}{4} + 1\frac{2}{4} = 3\frac{3}{4}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> \(\frac{3}{8} = 3 ÷ 8 = 0.375\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">אחוזים ויחסים</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>אחוזים</h3>
-                        <p>אחוז הוא דרך לבטא חלק מתוך 100. הסימן % אומר "מתוך מאה".</p>
-                        
-                        <div class="formula-box">
-                            <p>\(x\% = \frac{x}{100}\)</p>
-                            <p>\(\text{אחוז} = \frac{\text{חלק}}{\text{שלם}} \times 100\)</p>
-                        </div>
-                        
-                        <h4>יחסים ופרופורציות</h4>
-                        <p>יחס מבטא את הקשר בין שני גדלים. פרופורציה הוא שוויון בין שני יחסים.</p>
-                        
-                        <div class="formula-box">
-                            \(\frac{a}{b} = \frac{c}{d}\) (פרופורציה)
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>מה זה 25% מ-80?</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(25\% \text{ של } 80 = \frac{25}{100} \times 80 = 0.25 \times 80 = 20\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: מה זה 20% מ-50?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: 15 הוא כמה אחוזים מ-60?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: במחלקה 24 תלמידים, מתוכם 18 בנים. כמה אחוזים הן הבנות?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: מוצר עלה 200 ש"ח ויש עליו הנחה של 15%. מה המחיר אחרי הנחה?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: פתור פרופורציה: \(\frac{3}{4} = \frac{x}{12}\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(\frac{20}{100} \times 50 = 0.2 \times 50 = 10\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(\frac{15}{60} \times 100 = \frac{1}{4} \times 100 = 25\%\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> 6 בנות מתוך 24: \(\frac{6}{24} \times 100 = 25\%\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> הנחה: \(200 \times 0.15 = 30\) ש"ח. מחיר אחרי הנחה: \(200 - 30 = 170\) ש"ח
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(3 \times 12 = 4 \times x\), \(36 = 4x\), \(x = 9\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 2</div>
-                    <div class="chapter-title-display">אלגברה בסיסית</div>
-                    <div class="chapter-description-display">משוואות ליניאריות ואי-שוויונות</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">משוואות ליניאריות בנעלם אחד</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>משוואות ליניאריות</h3>
-                        <p>משוואה ליניארית בנעלם אחד היא משוואה בצורה:</p>
-                        <div class="formula-box">
-                            \(ax + b = c\)
-                        </div>
-                        <p>כאשר a, b, c הם מספרים ידועים ו-x הוא הנעלם.</p>
-                        
-                        <h4>שלבי פתרון</h4>
-                        <ol>
-                            <li>בודד את האיבר עם הנעלם בצד אחד</li>
-                            <li>העבר את כל המספרים לצד השני</li>
-                            <li>חלק במקדם של הנעלם</li>
+                        <p class="mt-4"><strong>שטח:</strong></p>
+                         <ol class="list-decimal list-inside space-y-1">
+                            <li>הנוסחה לשטח מלבן היא $שטח = אורך \times רוחב$.</li>
+                            <li>חשבו: $10 \times 8 = 80$. השטח הוא 80 מטר רבוע.</li>
                         </ol>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>פתור: \(2x + 3 = 11\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>שלב 1: העבר את 3 לצד ימין:</p>
-                            <p>\(2x = 11 - 3\)</p>
-                            <p>\(2x = 8\)</p>
-                            <p>שלב 2: חלק ב-2:</p>
-                            <p>\(x = \frac{8}{2} = 4\)</p>
-                            <p><strong>בדיקה:</strong> \(2(4) + 3 = 8 + 3 = 11\) ✓</p>
-                        </div>
-                    
                     </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: פתור: \(3x + 5 = 14\)
                 </div>
             </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: פתור: \(2x - 7 = 5\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: פתור: \(4x + 1 = 3x + 8\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: פתור: \(\frac{x}{3} + 2 = 5\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: פתור: \(5(x - 2) = 15\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: פתור: \(7x - 3 = 4x + 12\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: פתור: \(\frac{2x - 1}{3} = 7\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: פתור: \(0.5x + 1.5 = 4\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(3x = 14 - 5 = 9\), לכן \(x = \frac{9}{3} = 3\). בדיקה: \(3(3) + 5 = 14\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(2x = 5 + 7 = 12\), לכן \(x = \frac{12}{2} = 6\). בדיקה: \(2(6) - 7 = 5\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(4x - 3x = 8 - 1\), לכן \(x = 7\). בדיקה: \(4(7) + 1 = 29\) ו-\(3(7) + 8 = 29\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(\frac{x}{3} = 5 - 2 = 3\), לכן \(x = 3 \times 3 = 9\). בדיקה: \(\frac{9}{3} + 2 = 5\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(5x - 10 = 15\), \(5x = 25\), לכן \(x = 5\). בדיקה: \(5(5-2) = 15\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(7x - 4x = 12 + 3\), \(3x = 15\), לכן \(x = 5\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> \(2x - 1 = 21\), \(2x = 22\), לכן \(x = 11\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> \(0.5x = 4 - 1.5 = 2.5\), לכן \(x = \frac{2.5}{0.5} = 5\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">אי-שוויונות ליניאריות</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>אי-שוויונות ליניאריות</h3>
-                        <p>אי-שוויון ליניארי דומה למשוואה, אך במקום שוויון יש אי-שוויון:</p>
-                        <div class="formula-box">
-                            \(ax + b < c\) או \(ax + b > c\)
-                        </div>
-                        
-                        <h4>כללי פתרון</h4>
-                        <ul>
-                            <li>ניתן לחבר או לחסר מספר משני הצדדים</li>
-                            <li>ניתן לכפול או לחלק במספר חיובי - הכיוון נשמר</li>
-                            <li><strong>חשוב!</strong> בכפל או חלוקה במספר שלילי - הכיוון מתהפך</li>
-                        </ul>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>פתור: \(3x - 2 \leq 7\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(3x \leq 7 + 2\)</p>
-                            <p>\(3x \leq 9\)</p>
-                            <p>\(x \leq 3\)</p>
-                            <p><strong>בדיקה:</strong> עבור \(x = 2\): \(3(2) - 2 = 4 \leq 7\) ✓</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: פתור: \(2x + 1 > 9\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: פתור: \(-x + 5 \geq 2\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: פתור: \(5x - 3 < 2x + 9\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: פתור: \(\frac{x - 1}{2} \geq 3\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: פתור: \(-2x + 8 > 12\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: פתור: \(3(x + 1) \leq 2x + 7\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(2x > 9 - 1 = 8\), לכן \(x > 4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(-x \geq 2 - 5 = -3\), כפל ב-(-1): \(x \leq 3\) (הכיוון התהפך)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(5x - 2x < 9 + 3\), \(3x < 12\), לכן \(x < 4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(x - 1 \geq 6\), לכן \(x \geq 7\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(-2x > 4\), חלוקה ב-(-2): \(x < -2\) (הכיוון התהפך)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(3x + 3 \leq 2x + 7\), \(x \leq 4\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 3</div>
-                    <div class="chapter-title-display">משוואות ריבועיות</div>
-                    <div class="chapter-description-display">פתרון משוואות ריבועיות ופרבולות</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">משוואות ריבועיות</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>משוואות ריבועיות</h3>
-                        <p>משוואה ריבועית היא משוואה בצורה:</p>
-                        <div class="formula-box">
-                            \(ax^2 + bx + c = 0\)
-                        </div>
-                        <p>כאשר \(a \neq 0\).</p>
-                        
-                        <h4>נוסחת השורשים</h4>
-                        <p>הפתרון הכללי של משוואה ריבועית הוא:</p>
-                        <div class="formula-box">
-                            \(x_{1,2} = \frac{-b \pm \sqrt{b^2-4ac}}{2a}\)
-                        </div>
-                        
-                        <h4>הדיסקרימיננטה</h4>
-                        <p>הדיסקרימיננטה \(\Delta = b^2 - 4ac\) קובעת את מספר הפתרונות:</p>
-                        <ul>
-                            <li>אם \(\Delta > 0\): שני פתרונות שונים</li>
-                            <li>אם \(\Delta = 0\): פתרון יחיד</li>
-                            <li>אם \(\Delta < 0\): אין פתרונות ממשיים</li>
-                        </ul>
-                        
-                        <h4>פירוק לגורמים</h4>
-                        <p>לעיתים ניתן לפתור על ידי פירוק: \(ax^2 + bx + c = a(x-x_1)(x-x_2)\)</p>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>פתור: \(x^2 - 5x + 6 = 0\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(a = 1, b = -5, c = 6\)</p>
-                            <p>\(\Delta = (-5)^2 - 4 \cdot 1 \cdot 6 = 25 - 24 = 1\)</p>
-                            <p>\(x_{1,2} = \frac{5 \pm \sqrt{1}}{2} = \frac{5 \pm 1}{2}\)</p>
-                            <p>\(x_1 = 3, x_2 = 2\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: פתור: \(x^2 - 7x + 12 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: חשב את הדיסקרימיננטה של \(2x^2 + 3x + 5 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: פתור: \(x^2 + 6x + 9 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: פתור: \(x^2 - 4 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: פתור: \(2x^2 - 8x + 6 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: פתור: \(x^2 + 2x - 8 = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: עבור איזה ערך של k למשוואה \(x^2 + 4x + k = 0\) יש פתרון יחיד?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: פתור: \(3x^2 - 12x = 0\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 9: מצא את סכום השורשים של \(2x^2 - 5x + 1 = 0\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(\Delta = 49 - 48 = 1\), \(x = \frac{7 \pm 1}{2}\), לכן \(x_1 = 4, x_2 = 3\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(\Delta = 3^2 - 4 \cdot 2 \cdot 5 = 9 - 40 = -31\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(\Delta = 36 - 36 = 0\), פתרון יחיד: \(x = \frac{-6}{2} = -3\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(x^2 = 4\), לכן \(x = \pm 2\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> חלוקה ב-2: \(x^2 - 4x + 3 = 0\). פירוק: \((x-1)(x-3) = 0\), לכן \(x = 1\) או \(x = 3\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(\Delta = 4 + 32 = 36\), \(x = \frac{-2 \pm 6}{2}\), לכן \(x_1 = 2, x_2 = -4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> פתרון יחיד כאשר \(\Delta = 0\): \(16 - 4k = 0\), לכן \(k = 4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> הוצאת גורם משותף: \(3x(x - 4) = 0\), לכן \(x = 0\) או \(x = 4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 9:</strong> לפי נוסחאות ויאטה: סכום השורשים = \(\frac{-b}{a} = \frac{5}{2}\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">פרבולות ופונקציות ריבועיות</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>פונקציות ריבועיות</h3>
-                        <p>פונקציה ריבועית היא פונקציה בצורה:</p>
-                        <div class="formula-box">
-                            \(f(x) = ax^2 + bx + c\)
-                        </div>
-                        
-                        <h4>תכונות הפרבולה</h4>
-                        <ul>
-                            <li><strong>קודקוד:</strong> \(x_v = -\frac{b}{2a}\), \(y_v = f(x_v)\)</li>
-                            <li><strong>ציר סימטריה:</strong> \(x = -\frac{b}{2a}\)</li>
-                            <li><strong>כיוון הפתיחה:</strong> מעלה אם \(a > 0\), מטה אם \(a < 0\)</li>
-                        </ul>
-                        
-                        <div class="formula-box">
-                            <h5>צורה קנונית:</h5>
-                            \(f(x) = a(x - h)^2 + k\)
-                            <p>כאשר הקודקוד הוא \((h, k)\)</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>מצא את קודקוד הפרבולה \(f(x) = x^2 - 4x + 5\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(x_v = -\frac{-4}{2 \cdot 1} = 2\)</p>
-                            <p>\(y_v = f(2) = 4 - 8 + 5 = 1\)</p>
-                            <p>הקודקוד: \((2, 1)\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: מצא את קודקוד הפרבולה \(f(x) = x^2 + 6x + 8\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: עבור \(f(x) = -2x^2 + 8x - 6\), האם הפרבולה פתוחה מעלה או מטה?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: כתוב בצורה קנונית: \(f(x) = x^2 - 4x + 7\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: מצא את ציר הסימטריה של \(f(x) = 3x^2 - 12x + 5\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: מצא את הערך המינימלי של \(f(x) = x^2 - 6x + 10\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(x_v = -\frac{6}{2} = -3\), \(y_v = 9 - 18 + 8 = -1\). קודקוד: \((-3, -1)\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(a = -2 < 0\), לכן הפרבולה פתוחה מטה
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> השלמה לריבוע מושלם: \(f(x) = (x-2)^2 + 3\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> ציר סימטריה: \(x = -\frac{-12}{2 \cdot 3} = 2\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> קודקוד בנקודה \(x = 3\), \(f(3) = 9 - 18 + 10 = 1\). מינימום: 1
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 4</div>
-                    <div class="chapter-title-display">גאומטריה אנליטית</div>
-                    <div class="chapter-description-display">נקודות, ישרים ומעגלים במישור</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">משולשים ותכונותיהם</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>משולשים</h3>
-                        <p>משולש הוא צורה בעלת שלוש צלעות ושלוש זוויות.</p>
-                        
-                        <h4>סוגי משולשים לפי צלעות:</h4>
-                        <ul>
-                            <li><strong>משולש שווה צלעות:</strong> כל הצלעות שוות</li>
-                            <li><strong>משולש שווה שוקיים:</strong> שתי צלעות שוות</li>
-                            <li><strong>משולש שונה צלעות:</strong> כל הצלעות שונות</li>
-                        </ul>
-                        
-                        <h4>סוגי משולשים לפי זוויות:</h4>
-                        <ul>
-                            <li><strong>משולש חד זוויתי:</strong> כל הזוויות חדות (< 90°)</li>
-                            <li><strong>משולש ישר זוויתי:</strong> זווית אחת ישרה (= 90°)</li>
-                            <li><strong>משולש קהה זוויתי:</strong> זווית אחת קהה (> 90°)</li>
-                        </ul>
-                        
-                        <div class="formula-box">
-                            <h5>נוסחאות חשובות:</h5>
-                            <p><strong>סכום זוויות המשולש:</strong> \(\alpha + \beta + \gamma = 180°\)</p>
-                            <p><strong>שטח משולש:</strong> \(S = \frac{1}{2} \cdot \text{בסיס} \cdot \text{גובה}\)</p>
-                            <p><strong>משפט פיתגורס:</strong> \(a^2 + b^2 = c^2\) (במשולש ישר זוויתי)</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>במשולש ABC: ∠A = 60°, ∠B = 50°. מצא את ∠C.</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(\angle C = 180° - 60° - 50° = 70°\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: במשולש זוויות 45° ו-70°. מצא את הזווית השלישית.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: משולש ישר זוויתי עם רגליים באורכים 3 ו-4. מצא את היתר.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: במשולש שווה שוקיים הזווית שבקודקוד היא 40°. מצא את זוויות הבסיס.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: שטח משולש עם בסיס 8 ס"מ וגובה 6 ס"מ.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: משולש עם צלעות 5, 12, 13. האם זה משולש ישר זוויתי?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: הצלעות של משולש הן 6, 8, 10. חשב את השטח.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: במשולש שווה צלעות כל זווית שווה ל-?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: יתר במשולש ישר זוויתי הוא 10, אחת הרגליים היא 6. מצא את הרגל השנייה.
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(180° - 45° - 70° = 65°\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> לפי משפט פיתגורס: \(c = \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = \sqrt{25} = 5\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> זוויות הבסיס שוות. יהיו x כל אחת. \(40° + x + x = 180°\), \(2x = 140°\), \(x = 70°\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(S = \frac{1}{2} \times 8 \times 6 = 24\) ס"מ רבועים
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> בדיקה: \(5^2 + 12^2 = 25 + 144 = 169 = 13^2\). כן, זה משולש ישר זוויתי.
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> זהו משולש ישר זוויתי (\(6^2 + 8^2 = 10^2\)). שטח = \(\frac{1}{2} \times 6 \times 8 = 24\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> במשולש שווה צלעות כל הזוויות שוות: \(\frac{180°}{3} = 60°\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> \(6^2 + b^2 = 10^2\), \(36 + b^2 = 100\), \(b^2 = 64\), \(b = 8\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">מעגלים וגאומטריה אנליטית</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>מעגלים</h3>
-                        <p>מעגל הוא קבוצת כל הנקודות במישור הנמצאות במרחק קבוע מנקודה נתונה.</p>
-                        
-                        <div class="formula-box">
-                            <h5>נוסחאות המעגל:</h5>
-                            <p><strong>היקף:</strong> \(C = 2\pi r = \pi d\)</p>
-                            <p><strong>שטח:</strong> \(A = \pi r^2\)</p>
-                        </div>
-                        
-                        <h3>גאומטריה אנליטית</h3>
-                        <p>בגאומטריה אנליטית אנו משתמשים במערכת צירים לתיאור נקודות וישרים.</p>
-                        
-                        <div class="formula-box">
-                            <h5>נוסחת המרחק:</h5>
-                            <p>\(d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}\)</p>
-                            <h5>שיפוע ישר:</h5>
-                            <p>\(m = \frac{y_2-y_1}{x_2-x_1}\)</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>מעגל ברדיוס 5 ס"מ. חשב את ההיקף והשטח.</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>היקף: \(C = 2\pi \times 5 = 10\pi\) ס"מ</p>
-                            <p>שטח: \(A = \pi \times 5^2 = 25\pi\) ס"מ²</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: מעגל ברדיוס 7 ס"מ. חשב את ההיקף.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: מעגל בקוטר 12 מ'. חשב את השטח.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: היקף מעגל הוא \(20\pi\) ס"מ. מצא את הרדיוס.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: שטח מעגל הוא \(49\pi\) ס"מ². מצא את הרדיוס.
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: מצא את המרחק בין \((0,0)\) ו-\((3,4)\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: מצא את השיפוע של הישר העובר דרך \((1,2)\) ו-\((5,8)\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: מרחק נקודה \((3,7)\) מהראשית.
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(C = 2\pi \times 7 = 14\pi\) ס"מ ≈ 43.98 ס"מ
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(r = 6\) מ', \(A = \pi \times 6^2 = 36\pi\) מ"ר ≈ 113.1 מ"ר
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(2\pi r = 20\pi\), לכן \(r = 10\) ס"מ
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(\pi r^2 = 49\pi\), לכן \(r^2 = 49\), \(r = 7\) ס"מ
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(d = \sqrt{3^2 + 4^2} = \sqrt{9+16} = 5\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(m = \frac{8-2}{5-1} = \frac{6}{4} = \frac{3}{2}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> \(d = \sqrt{3^2 + 7^2} = \sqrt{9+49} = \sqrt{58}\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 5</div>
-                    <div class="chapter-title-display">טריגונומטריה</div>
-                    <div class="chapter-description-display">יחסים טריגונומטריים במשולש ישר זווית</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">יחסים טריגונומטריים</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>טריגונומטריה במשולש ישר זווית</h3>
-                        <p>עבור זווית חדה \(\alpha\) במשולש ישר זווית:</p>
-                        
-                        <div class="formula-box">
-                            \(\sin \alpha = \frac{\text{תידגנ עלצ}}{\text{רתי}}\)
-                        </div>
-                        <div class="formula-box">
-                            \(\cos \alpha = \frac{\text{הכומס עלצ}}{\text{רתי}}\)
-                        </div>
-                        <div class="formula-box">
-                            \(\tan \alpha = \frac{\text{תידגנ עלצ}}{\text{הכומס עלצ}}\)
-                        </div>
-                        
-                        <h4>זוויות מיוחדות</h4>
-                        <table style="border-collapse: collapse; margin: 20px auto; direction: ltr;">
-                            <tr style="background: #3498db; color: white;">
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: center;">זווית</th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: center;">sin</th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: center;">cos</th>
-                                <th style="border: 1px solid #ddd; padding: 12px; text-align: center;">tan</th>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">30°</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{1}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{\sqrt{3}}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{1}{\sqrt{3}}\)</td>
-                            </tr>
-                            <tr style="background: #f8f9fa;">
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">45°</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{\sqrt{2}}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{\sqrt{2}}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(1\)</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">60°</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{\sqrt{3}}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\frac{1}{2}\)</td>
-                                <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">\(\sqrt{3}\)</td>
-                            </tr>
-                        </table>
-                        
-                        <h4>זהויות טריגונומטריות בסיסיות</h4>
-                        <div class="formula-box">
-                            \(\sin^2 \alpha + \cos^2 \alpha = 1\) (זהות פיתגורס)
-                        </div>
-                        <div class="formula-box">
-                            \(\tan \alpha = \frac{\sin \alpha}{\cos \alpha}\)
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה מפורטת:</h5>
-                            <p>במשולש ישר זווית עם צלעות 5, 12, 13, מצא את כל היחסים הטריגונומטריים עבור הזווית מול הצלע באורך 5.</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>זיהוי הצלעות: צלע נגדית = 5, צלע סמוכה = 12, יתר = 13</p>
-                            <p>\(\sin \alpha = \frac{5}{13}\)</p>
-                            <p>\(\cos \alpha = \frac{12}{13}\)</p>
-                            <p>\(\tan \alpha = \frac{5}{12}\)</p>
-                            <p><strong>בדיקה:</strong> \(\sin^2 \alpha + \cos^2 \alpha = \frac{25}{169} + \frac{144}{169} = \frac{169}{169} = 1\) ✓</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: במשולש ישר זווית עם צלעות 3, 4, 5, חשב את \(\sin \beta\) עבור הזווית מול הצלע באורך 4
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: אם \(\cos \gamma = \frac{3}{5}\), מצא את \(\sin \gamma\) (בהנחה שגמא זווית חדה)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: חשב את \(\tan 30°\) באמצעות הערכים מהטבלה
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: במשולש ישר זווית, אם \(\tan \theta = \frac{7}{24}\), מצא את היתר כאשר הצלע הנגדית היא 7
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: וודא שהזהות \(\sin^2 45° + \cos^2 45° = 1\) נכונה
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: במשולש ישר זווית, הזווית החדה הקטנה היא 30°. אם היתר הוא 10, מה אורך הצלע הקצרה?
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> היתר = 5, צלע נגדית = 4, לכן \(\sin \beta = \frac{4}{5} = 0.8\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> מזהות פיתגורס: \(\sin^2 \gamma = 1 - \cos^2 \gamma = 1 - \frac{9}{25} = \frac{16}{25}\), לכן \(\sin \gamma = \frac{4}{5}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(\tan 30° = \frac{\sin 30°}{\cos 30°} = \frac{\frac{1}{2}}{\frac{\sqrt{3}}{2}} = \frac{1}{\sqrt{3}}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(\tan \theta = \frac{7}{24}\) אומר שהצלע הסמוכה = 24. לפי פיתגורס: יתר = \(\sqrt{7^2 + 24^2} = \sqrt{49 + 576} = \sqrt{625} = 25\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(\sin 45° = \cos 45° = \frac{\sqrt{2}}{2}\). לכן: \(\left(\frac{\sqrt{2}}{2}\right)^2 + \left(\frac{\sqrt{2}}{2}\right)^2 = \frac{2}{4} + \frac{2}{4} = \frac{4}{4} = 1\) ✓
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> הצלע הקצרה נמצאת מול הזווית הקטנה (30°). \(\sin 30° = \frac{1}{2}\), לכן הצלע = \(10 \times \frac{1}{2} = 5\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 6</div>
-                    <div class="chapter-title-display">הסתברות וסטטיסטיקה</div>
-                    <div class="chapter-description-display">מושגי יסוד בהסתברות ומדדי מרכז</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">מבוא להסתברות</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>הסתברות קלאסית</h3>
-                        <p>ההסתברות של אירוע A היא:</p>
-                        <div class="formula-box">
-                            \(P(A) = \frac{\text{תובוטה תואצותה רפסמ}}{\text{תוירשפאה תואצותה רפסמ}}\)
-                        </div>
-                        
-                        <h4>תכונות בסיסיות</h4>
-                        <ul>
-                            <li>\(0 \leq P(A) \leq 1\)</li>
-                            <li>\(P(A^c) = 1 - P(A)\) (אירוע משלים)</li>
-                            <li>\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</li>
-                            <li>אירועים בלתי תלויים: \(P(A \cap B) = P(A) \cdot P(B)\)</li>
-                        </ul>
-                        
-                        <h4>הסתברות מותנית</h4>
-                        <div class="formula-box">
-                            \(P(A|B) = \frac{P(A \cap B)}{P(B)}\)
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>מה ההסתברות לקבלת מספר זוגי בהטלת קובייה?</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>מספרים זוגיים: 2, 4, 6 (3 אפשרויות)</p>
-                            <p>סה"כ אפשרויות: 6</p>
-                            <p>\(P = \frac{3}{6} = \frac{1}{2}\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: מה ההסתברות לשלוף אס מחבילת קלפים?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: מה ההסתברות לקבלת סכום 7 בהטלת שתי קוביות?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: בקופסה 5 כדורים אדומים ו-3 כחולים. מה ההסתברות לשלוף כדור אדום?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: אם \(P(A) = 0.3\), מה \(P(A^c)\)?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: בכיתה 15 בנים ו-10 בנות. מה ההסתברות לבחור בת?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: מטילים מטבע פעמיים. מה ההסתברות לקבל לפחות עץ אחד?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: אירועים A ו-B בלתי תלויים. \(P(A) = 0.4, P(B) = 0.3\). מצא \(P(A \cap B)\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 8: שולפים קלף מחבילה. מה ההסתברות שזה מלך או אס?
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> 4 אסים מתוך 52 קלפים: \(P = \frac{4}{52} = \frac{1}{13}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> דרכים לקבל 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) = 6 דרכים מתוך 36. \(P = \frac{6}{36} = \frac{1}{6}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> 5 כדורים אדומים מתוך 8 כדורים: \(P = \frac{5}{8}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(P(A^c) = 1 - P(A) = 1 - 0.3 = 0.7\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> 10 בנות מתוך 25 תלמידים: \(P = \frac{10}{25} = \frac{2}{5} = 0.4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> אפשרויות: EE, EF, FE, FF. לפחות עץ אחד: EE, EF, FE (3 מתוך 4). \(P = \frac{3}{4}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> עבור אירועים בלתי תלויים: \(P(A \cap B) = P(A) \cdot P(B) = 0.4 \times 0.3 = 0.12\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 8:</strong> 4 מלכים + 4 אסים = 8 קלפים מתוך 52. \(P = \frac{8}{52} = \frac{2}{13}\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">קומבינטוריקה</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>ספירה וסידורים</h3>
-                        <p>קומבינטוריקה עוסקת בספירת אפשרויות ודרכי סידור.</p>
-                        
-                        <h4>עקרון הכפל</h4>
-                        <p>אם יש m דרכים לבצע פעולה ראשונה ו-n דרכים לבצע פעולה שנייה, אז יש \(m \times n\) דרכים לבצע את שתיהן.</p>
-                        
-                        <h4>פקטוריאל</h4>
-                        <div class="formula-box">
-                            \(n! = n \times (n-1) \times (n-2) \times ... \times 2 \times 1\)
-                        </div>
-                        
-                        <h4>תמורות וצירופים</h4>
-                        <div class="formula-box">
-                            <p><strong>תמורות (הסדר חשוב):</strong> \(P(n,r) = \frac{n!}{(n-r)!}\)</p>
-                            <p><strong>צירופים (הסדר לא חשוב):</strong> \(C(n,r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}\)</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>בכמה דרכים ניתן לסדר 5 ספרים על מדף?</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\) דרכים</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: חשב \(4!\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: בכמה דרכים ניתן לבחור 3 תלמידים מתוך 10?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: בכמה דרכים ניתן לסדר 3 אנשים ברצף מתוך 5?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: כמה מספרים שונים בני 3 ספרות ניתן ליצור מהספרות 1,2,3,4,5 (ללא חזרה)?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: כמה דרכים יש לבחור נשיא וסגן מתוך 8 מועמדים?
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(4! = 4 \times 3 \times 2 \times 1 = 24\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(\binom{10}{3} = \frac{10!}{3! \times 7!} = \frac{10 \times 9 \times 8}{3 \times 2 \times 1} = 120\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(P(5,3) = \frac{5!}{2!} = \frac{120}{2} = 60\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(P(5,3) = 5 \times 4 \times 3 = 60\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> 8 בחירות לנשיא ו-7 לסגן: \(8 \times 7 = 56\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
-            <div class="chapter">
-                <div class="chapter-header">
-                    <div class="chapter-number-display">פרק 7</div>
-                    <div class="chapter-title-display">חשבון דיפרנציאלי</div>
-                    <div class="chapter-description-display">נגזרות ויישומים</div>
-                </div>
-                <div class="chapter-content">
-                    
-            <div class="lesson">
-                <div class="lesson-title">נגזרות של פולינומים</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>חישוב נגזרות</h3>
-                        <p>הנגזרת מודדת את קצב השינוי של פונקציה בנקודה נתונה.</p>
-                        
-                        <h4>כללים בסיסיים</h4>
-                        <ul>
-                            <li>\(\frac{d}{dx}(c) = 0\) (נגזרת קבוע)</li>
-                            <li>\(\frac{d}{dx}(x^n) = nx^{n-1}\) (כלל החזקה)</li>
-                            <li>\(\frac{d}{dx}(f+g) = f' + g'\) (נגזרת סכום)</li>
-                            <li>\(\frac{d}{dx}(cf) = c \cdot f'\) (נגזרת כפולה בקבוע)</li>
-                        </ul>
-                        
-                        <h4>פונקציות מיוחדות</h4>
-                        <div class="formula-box">
-                            <p>\(\frac{d}{dx}(\sin x) = \cos x\)</p>
-                            <p>\(\frac{d}{dx}(\cos x) = -\sin x\)</p>
-                            <p>\(\frac{d}{dx}(e^x) = e^x\)</p>
-                            <p>\(\frac{d}{dx}(\ln x) = \frac{1}{x}\)</p>
-                        </div>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה מפורטת:</h5>
-                            <p>מצא את הנגזרת של \(f(x) = 3x^4 - 2x^3 + 5x - 7\)</p>
-                            <p><strong>פתרון שלב אחר שלב:</strong></p>
-                            <p>\(f'(x) = \frac{d}{dx}(3x^4) - \frac{d}{dx}(2x^3) + \frac{d}{dx}(5x) - \frac{d}{dx}(7)\)</p>
-                            <p>\(f'(x) = 3 \cdot 4x^3 - 2 \cdot 3x^2 + 5 \cdot 1 - 0\)</p>
-                            <p>\(f'(x) = 12x^3 - 6x^2 + 5\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: מצא את הנגזרת של \(g(x) = x^3 - 4x + 1\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: מצא את הנגזרת של \(h(x) = 5x^4 + 2x^2 - 8\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: מצא את הנגזרת של \(f(x) = \frac{1}{x^2}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: מצא את הנגזרת של \(y = 3\sqrt{x} + \frac{2}{x}\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: מצא את הנגזרת של \(f(x) = (2x + 1)^3\) (השתמש בכלל השרשרת)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: מה הנגזרת של \(f(x) = x^5 - 3x^3 + 7x - 2\) בנקודה \(x = 1\)?
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 7: מצא את הנגזרת השנייה של \(f(x) = x^4 - 2x^2\)
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(g'(x) = 3x^2 - 4 + 0 = 3x^2 - 4\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(h'(x) = 5 \cdot 4x^3 + 2 \cdot 2x - 0 = 20x^3 + 4x\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(f(x) = x^{-2}\), לכן \(f'(x) = -2x^{-3} = -\frac{2}{x^3}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(y = 3x^{1/2} + 2x^{-1}\), לכן \(y' = 3 \cdot \frac{1}{2}x^{-1/2} - 2x^{-2} = \frac{3}{2\sqrt{x}} - \frac{2}{x^2}\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> יהי \(u = 2x + 1\), אז \(f(x) = u^3\). \(\frac{df}{dx} = 3u^2 \cdot \frac{du}{dx} = 3(2x+1)^2 \cdot 2 = 6(2x+1)^2\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(f'(x) = 5x^4 - 9x^2 + 7\). בנקודה \(x = 1\): \(f'(1) = 5 - 9 + 7 = 3\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 7:</strong> \(f'(x) = 4x^3 - 4x\), \(f''(x) = 12x^2 - 4\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-            <div class="lesson">
-                <div class="lesson-title">אינטגרלים בסיסיים</div>
-                <div class="lesson-content">
-                    <div class="theory-section">
-                        
-                        <h3>אינטגרלים</h3>
-                        <p>האינטגרל הוא הפעולה ההפוכה לגזירה, ומחשב את השטח מתחת לגרף.</p>
-                        
-                        <h4>אינטגרל לא מסוים</h4>
-                        <div class="formula-box">
-                            \(\int x^n dx = \frac{x^{n+1}}{n+1} + C\) (כאשר \(n \neq -1\))
-                        </div>
-                        
-                        <h4>אינטגרלים בסיסיים</h4>
-                        <div class="formula-box">
-                            <p>\(\int 1 dx = x + C\)</p>
-                            <p>\(\int x dx = \frac{x^2}{2} + C\)</p>
-                            <p>\(\int \sin x dx = -\cos x + C\)</p>
-                            <p>\(\int \cos x dx = \sin x + C\)</p>
-                            <p>\(\int e^x dx = e^x + C\)</p>
-                        </div>
-                        
-                        <h4>אינטגרל מסוים</h4>
-                        <div class="formula-box">
-                            \(\int_a^b f(x) dx = F(b) - F(a)\)
-                        </div>
-                        <p>כאשר F הוא הפונקציה הקדומה של f.</p>
-                        
-                        <div class="example-box">
-                            <h5>דוגמה:</h5>
-                            <p>חשב את \(\int (3x^2 + 2x - 1) dx\)</p>
-                            <p><strong>פתרון:</strong></p>
-                            <p>\(\int (3x^2 + 2x - 1) dx = 3 \cdot \frac{x^3}{3} + 2 \cdot \frac{x^2}{2} - x + C\)</p>
-                            <p>\(= x^3 + x^2 - x + C\)</p>
-                        </div>
-                    
-                    </div>
-                    
-                    <div class="exercises-section">
-                        <div class="exercises-title">תרגילים לתרגול</div>
-                        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 1: חשב \(\int x^4 dx\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 2: חשב \(\int (2x + 3) dx\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 3: חשב \(\int_0^2 x dx\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 4: חשב \(\int (x^3 - 4x + 5) dx\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 5: חשב \(\int_1^3 (2x - 1) dx\)
-                </div>
-            </div>
-        
-            <div class="exercise">
-                <div class="exercise-question">
-                    תרגיל 6: מה הפונקציה הקדומה של \(f(x) = 6x^2 - 4x + 1\)?
-                </div>
-            </div>
-        
-            <div class="answers-section">
-                <h4>תשובות:</h4>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 1:</strong> \(\int x^4 dx = \frac{x^5}{5} + C\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 2:</strong> \(\int (2x + 3) dx = 2 \cdot \frac{x^2}{2} + 3x + C = x^2 + 3x + C\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 3:</strong> \(\int_0^2 x dx = \left[\frac{x^2}{2}\right]_0^2 = \frac{4}{2} - 0 = 2\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 4:</strong> \(\int (x^3 - 4x + 5) dx = \frac{x^4}{4} - 2x^2 + 5x + C\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 5:</strong> \(\int_1^3 (2x - 1) dx = [x^2 - x]_1^3 = (9 - 3) - (1 - 1) = 6\)
-                    </div>
-                
-                    <div class="answer-item">
-                        <strong>תרגיל 6:</strong> \(F(x) = \int (6x^2 - 4x + 1) dx = 2x^3 - 2x^2 + x + C\)
-                    </div>
-                
-            </div>
-        
-                    </div>
-                </div>
-            </div>
-        
-                </div>
-            </div>
-        
+
+            <div class="quiz">
+                <h3 class="text-2xl font-bold mb-4">סיכום ובוחן פרק 6</h3>
+                <ol>
+                    <li>במשולש יש שתי זוויות בגודל $50^\circ$ ו-$70^\circ$. מה גודל הזווית השלישית?</li>
+                    <li>מצאו את היקפו של מלבן שאורכו 15 ס"מ ורוחבו 4 ס"מ.</li>
+                    <li>מצאו את שטחו של אותו מלבן.</li>
+                    <li>מצאו את היקפו של ריבוע שאורך צלעו 11 מטר.</li>
+                    <li>מצאו את שטחו של אותו ריבוע.</li>
+                    <li>אתם מרצפים רצפה מלבנית ברוחב 6 מטר ואורך 8 מטר. כמה אריחים של 1x1 מטר תצטרכו?</li>
+                    <li>למלבן יש היקף של 30 ס"מ. אם אורכו 10 ס"מ, מה רוחבו?</li>
+                    <li>במשולש ישר-זווית יש זווית של $40^\circ$. מה גודל הזווית השלישית?</li>
+                    <li>מהו שטחו של חדר מלבני שרוחבו 5 מטר ואורכו 9 מטר?</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Final Exam -->
+        <div id="finalexam" class="chapter-break">
+            <header class="chapter-header">
+                <h2 class="text-4xl font-bold">מבחן סופי</h2>
+            </header>
+            <p class="text-lg italic text-slate-600 mb-6">מבחן זה מכסה חומר מכל ששת הפרקים. קחו את הזמן והציגו את דרך הפתרון.</p>
+
+            <div class="final-exam">
+                <ol class="list-decimal list-inside space-y-4">
+                    <li><strong>(פרק 1)</strong> חשבו: <span dir="ltr">$5 + (12 - 2) \times 3 - 8 \div 4 =$</span></li>
+                    <li><strong>(פרק 1)</strong> אתם חוסכים לאופניים שעולים 1500 ש"ח. כבר חסכתם 850 ש"ח. אם אתם חוסכים 50 ש"ח בשבוע, כמה שבועות ייקח לכם לחסוך את היתרה?</li>
+                    <li><strong>(פרק 2)</strong> פתרו: <span dir="ltr">$\frac{2}{3} + \frac{1}{4} =$</span></li>
+                    <li><strong>(פרק 2)</strong> רץ סיים מרוץ ב-12.75 דקות. כתבו את הזמן הזה כשבר מעורב מצומצם.</li>
+                    <li><strong>(פרק 3)</strong> חנות מציעה 30% הנחה. אם המחיר המקורי של חולצה הוא 120 ש"ח, מהו מחיר המבצע?</li>
+                    <li><strong>(פרק 3)</strong> כמה הם 8% מתוך 500?</li>
+                    <li><strong>(פרק 4)</strong> חשבו את <span dir="ltr">$3^4$</span>.</li>
+                    <li><strong>(פרק 4)</strong> מצאו את <span dir="ltr">$\sqrt{196}$</span>.</li>
+                    <li><strong>(פרק 5)</strong> פתרו עבור x: <span dir="ltr">$6x = 42$</span>.</li>
+                    <li><strong>(פרק 5)</strong> מספר חולק ב-4, והתוצאה היא 9. מהו המספר? כתבו ופתרו משוואה.</li>
+                    <li><strong>(פרק 6)</strong> מגרש מלבני אורכו 50 מטר ורוחבו 20 מטר. מה היקפו?</li>
+                    <li><strong>(פרק 6)</strong> מהו שטחו של המגרש מהשאלה הקודמת?</li>
+                    <li class="mt-4 pt-4 border-t"><strong>(אתגר)</strong> אתם רוצים לקנות שטיח לחדר ריבועי שאורך צלעו 10 מטר. השטיח עולה 30 ש"ח למטר רבוע. יש גם 17% מע"מ על העלות הכוללת. מהו המחיר הסופי שתשלמו?</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Answer Key -->
+        <div id="answers" class="chapter-break">
+            <header class="chapter-header">
+                <h2 class="text-4xl font-bold">מפתח תשובות</h2>
+            </header>
+            <div class="answer-key">
+                <h3 class="text-2xl font-bold mb-4">פרק 1: סיכום ובוחן</h3>
+                <ol><li>375</li><li>22</li><li>32</li><li>320 ש"ח</li><li>128 ספרים</li><li>20</li><li>5</li><li>58 ש"ח</li><li>95 עמודים</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">פרק 2: סיכום ובוחן</h3>
+                <ol><li>$\frac{5}{8}$</li><li>$\frac{1}{5}$</li><li>$1\frac{1}{2}$</li><li>$\frac{3}{5}$</li><li>$\frac{3}{8}$ כוס</li><li>33.12</li><li>10.35</li><li>0.4</li><li>2.50 ש"ח</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">פרק 3: סיכום ובוחן</h3>
+                <ol><li>$\frac{2}{5}$</li><li>7%</li><li>90</li><li>225 ש"ח</li><li>90%</li><li>30</li><li>292.5 ש"ח</li><li>90%</li><li>1.25</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">פרק 4: סיכום ובוחן</h3>
+                <ol><li>36</li><li>16</li><li>8</li><li>11</li><li>64 מ"ר</li><li>10 ס"מ</li><li>1</li><li>13</li><li>9 מטר</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">פרק 5: סיכום ובוחן</h3>
+                <ol><li>14</li><li>6</li><li>30</li><li>5</li><li>8</li><li>100 ש"ח</li><li>47 בולים</li><li>40 ש"ח</li><li>5</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">פרק 6: סיכום ובוחן</h3>
+                <ol><li>$60^\circ$</li><li>38 ס"מ</li><li>60 סמ"ר</li><li>44 מטר</li><li>121 מ"ר</li><li>48 אריחים</li><li>5 ס"מ</li><li>$50^\circ$</li><li>45 מ"ר</li></ol>
+                <h3 class="text-2xl font-bold mt-6 mb-4">מבחן סופי</h3>
+                <ol><li>33</li><li>13 שבועות</li><li>$\frac{11}{12}$</li><li>$12\frac{3}{4}$</li><li>84 ש"ח</li><li>40</li><li>81</li><li>14</li><li>7</li><li>36</li><li>140 מטר</li><li>1000 מ"ר</li><li>3510 ש"ח</li></ol>
+            </div>
+        </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ]
+                });
+            }
+        });
+    </script>
 </body>
 </html>
